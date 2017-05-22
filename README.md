@@ -1,4 +1,4 @@
-# ark_battleroyal
+# ark_battleroyale
 Battle Royale gimmick mission for ARK
 
 ## Looting System

@@ -59,4 +59,12 @@ class Params {
         default = 9999;
         code = "hull3_mission_safetyTimerEnd = %1";
     };
+
+    class ARK_BR_Debug {
+        title = "Debug Markers";
+        values[] = {0,1};
+        texts[] = {"Off", "On"};
+        default = 0;
+        code = "ark_br_debugState = %1";
+    };
 };
