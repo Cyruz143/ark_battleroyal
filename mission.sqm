@@ -1,0 +1,4770 @@
+////////////////////////////////////////////////////////////////////
+//DeRap: Produced from mikero's Dos Tools Dll version 4.88
+//Mon May 22 08:36:08 2017 : Source 'file' date Mon May 22 08:36:08 2017
+//http://dev-heaven.net/projects/list_files/mikero-pbodll
+////////////////////////////////////////////////////////////////////
+
+#define _ARMA_
+
+//Class ark_gtvt51_battle_royale.Chernarus : mission.sqm{
+version = 53;
+class EditorData
+{
+	moveGridStep = 1.0;
+	angleGridStep = 0.2617994;
+	scaleGridStep = 1.0;
+	autoGroupingDist = 10.0;
+	toggles = 577;
+	class ItemIDProvider
+	{
+		nextID = 269;
+	};
+	class MarkerIDProvider
+	{
+		nextID = 5;
+	};
+	class Camera
+	{
+		pos[] = {8817.91,308.93164,11541.357};
+		dir[] = {0.16749303,-0.2095913,-0.9633489};
+		up[] = {0.035903648,0.97778213,-0.20650159};
+		aside[] = {-0.9852363,6.5614586e-008,-0.17129755};
+	};
+};
+addons[] = {"A3_Supplies_F_Exp_Ammoboxes","CUP_Editor_A2_Railway_Config","A3_Structures_F_Walls","A3_Characters_F","A3_Ui_F","hull3","CUP_WheeledVehicles_Datsun","CUP_Wheeledvehicles_VWGolf","CUP_WheeledVehicles_Skoda","CUP_WheeledVehicles_Ikarus","CUP_WheeledVehicles_UAZ","CUP_Wheeled_SUV","CUP_WheeledVehicles_Ural","CUP_WheeledVehicles_LR","A3_Soft_F_Quadbike_01","A3_Soft_F_Beta_Truck_02","A3_Modules_F","A3_Characters_F_Exp_Civil"};
+class AddonsMetaData
+{
+	class List
+	{
+		items = 18;
+		class Item0
+		{
+			className = "A3_Supplies_F_Exp";
+			name = "Arma 3 Apex - Ammoboxes and Supplies";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item1
+		{
+			className = "CUP_Editor_A2_Railway_Config";
+			name = "CUP_Editor_A2_Railway_Config";
+		};
+		class Item2
+		{
+			className = "A3_Structures_F";
+			name = "Arma 3 - Buildings and Structures";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item3
+		{
+			className = "A3_Characters_F";
+			name = "Arma 3 Alpha - Characters and Clothing";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item4
+		{
+			className = "A3_Ui_F";
+			name = "Arma 3 - User Interface";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item5
+		{
+			className = "Hull3";
+			name = "hull3";
+			author = "Kami";
+		};
+		class Item6
+		{
+			className = "CUP_WheeledVehicles_Datsun";
+			name = "CUP_WheeledVehicles_Datsun";
+		};
+		class Item7
+		{
+			className = "CUP_Wheeledvehicles_VWGolf";
+			name = "CUP_Wheeledvehicles_VWGolf";
+		};
+		class Item8
+		{
+			className = "CUP_WheeledVehicles_Skoda";
+			name = "CUP_WheeledVehicles_Skoda";
+		};
+		class Item9
+		{
+			className = "CUP_WheeledVehicles_Ikarus";
+			name = "CUP_WheeledVehicles_Ikarus";
+		};
+		class Item10
+		{
+			className = "CUP_WheeledVehicles_UAZ";
+			name = "CUP_WheeledVehicles_UAZ";
+		};
+		class Item11
+		{
+			className = "CUP_Wheeled_SUV";
+			name = "CUP_Wheeled_SUV";
+		};
+		class Item12
+		{
+			className = "CUP_WheeledVehicles_Ural";
+			name = "CUP_WheeledVehicles_Ural";
+		};
+		class Item13
+		{
+			className = "CUP_WheeledVehicles_LR";
+			name = "CUP_WheeledVehicles_LR";
+		};
+		class Item14
+		{
+			className = "A3_Soft_F";
+			name = "Arma 3 Alpha - Unarmored Land Vehicles";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item15
+		{
+			className = "A3_Soft_F_Beta";
+			name = "Arma 3 Beta - Unarmored Land Vehicles";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item16
+		{
+			className = "A3_Modules_F";
+			name = "Arma 3 Alpha - Scripted Modules";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+		class Item17
+		{
+			className = "A3_Characters_F_Exp";
+			name = "Arma 3 Apex - Characters and Clothing";
+			author = "Bohemia Interactive";
+			url = "https://www.arma3.com";
+		};
+	};
+};
+class DynamicSimulation
+{
+	saturateByObjectDistance = 0;
+	class EnableRadiuses
+	{
+		EmptyVehicle = 50.0;
+		Vehicle = 50.0;
+	};
+	class EnableRadiuseCoefs
+	{
+		IsMoving = 1.0;
+	};
+};
+randomSeed = 14779546;
+class ScenarioData
+{
+	author = "Copyright Infringement";
+	class Header
+	{
+		gameType = "LastMan";
+		minPlayers = 1;
+		maxPlayers = 50;
+	};
+	wreckRemovalMaxTime = 3600.0;
+};
+class CustomAttributes
+{
+	class Category0
+	{
+		name = "Multiplayer";
+		class Attribute0
+		{
+			property = "RespawnButton";
+			expression = "true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[] = {"SCALAR"};
+					};
+					value = 1.0;
+				};
+			};
+		};
+		class Attribute1
+		{
+			property = "RespawnTemplates";
+			expression = "true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[] = {"ARRAY"};
+					};
+					class value
+					{
+						items = 1;
+						class Item0
+						{
+							class data
+							{
+								class type
+								{
+									type[] = {"STRING"};
+								};
+								value = "None";
+							};
+						};
+					};
+				};
+			};
+		};
+		nAttributes = 2;
+	};
+};
+class Mission
+{
+	class Intel
+	{
+		briefingName = "ark_gtvt51_battle_royale";
+		overviewText = "Could you kill your best friend?";
+		timeOfChanges = 1800.0002;
+		startWeather = 0.3;
+		startWind = 0.0;
+		startWaves = 0.1;
+		forecastWeather = 0.3;
+		forecastWind = 0.0;
+		forecastWaves = 0.1;
+		forecastLightnings = 0.1;
+		windForced = 1;
+		year = 2035;
+		month = 6;
+		day = 24;
+		hour = 12;
+		minute = 0;
+		startFogDecay = 0.013;
+		forecastFogDecay = 0.013;
+	};
+	class Entities
+	{
+		items = 80;
+		class Item0
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9341.98,312.0039,9910.698};
+				angles[] = {6.228573,1.5848986,6.2671647};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				name = "startCrate";
+			};
+			id = 9;
+			type = "Box_GEN_Equip_F";
+			atlOffset = 0.005432129;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""SMG_05_F"",""hgun_P07_F"",""FirstAidKit""],[6,6,6]],[[""30Rnd_9x21_Mag_SMG_02"",""16Rnd_9x21_Mag"",""SmokeShell"",""SmokeShellYellow"",""HandGrenade""],[24,18,6,6,6]],[[""H_MilCap_gen_F"",""H_Beret_gen_F"",""acc_flashlight"",""muzzle_snds_L"",""U_B_GEN_Commander_F"",""U_B_GEN_Soldier_F"",""V_TacVest_gen_F""],[3,3,2,2,3,3,6]],[[],[]]],false]";
+						};
+					};
+				};
+				class Attribute1
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 2;
+			};
+		};
+		class Item1
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9341.799,310.85168,9907.217};
+				angles[] = {6.2378845,0.0,6.267187};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes{};
+			id = 12;
+			type = "CUP_Railway_Rail_Platform_Start";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item2
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9338.936,311.08508,9910.696};
+				angles[] = {6.228573,1.5707964,6.267187};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes{};
+			id = 14;
+			type = "CUP_Railway_Rail_Platform_Start";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item3
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9341.92,311.22443,9914.398};
+				angles[] = {6.232561,3.1415927,6.2631893};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes{};
+			id = 15;
+			type = "CUP_Railway_Rail_Platform_Start";
+			atlOffset = 3.0517578e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item4
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9344.771,310.9722,9910.546};
+				angles[] = {6.232561,4.712389,6.2631893};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes{};
+			id = 16;
+			type = "CUP_Railway_Rail_Platform_Start";
+			atlOffset = 3.0517578e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item5
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9335.141,311.80692,9916.929};
+				angles[] = {0.0,2.2571645,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence1";
+			};
+			id = 29;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item6
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9332.73,311.46536,9910.22};
+				angles[] = {0.0,4.724798,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence8";
+			};
+			id = 30;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item7
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9335.549,311.09546,9903.855};
+				angles[] = {0.0,3.8674402,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence7";
+			};
+			id = 31;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item8
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9348.587,310.9351,9904.728};
+				angles[] = {0.0,5.3738513,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence6";
+			};
+			id = 32;
+			type = "Land_PipeWall_concretel_8m_F";
+			atlOffset = 3.0517578e-005;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item9
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9350.829,311.20212,9911.495};
+				angles[] = {0.0,1.5582997,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence5";
+			};
+			id = 33;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item10
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9347.853,311.57297,9917.787};
+				angles[] = {0.0,0.7009417,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence4";
+			};
+			id = 34;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item11
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9342.307,310.88904,9901.474};
+				angles[] = {0.0,6.263829,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence3";
+			};
+			id = 35;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item12
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9341.509,311.83896,9919.957};
+				angles[] = {0.0,6.263829,0.0};
+			};
+			side = "Empty";
+			flags = 5;
+			class Attributes
+			{
+				name = "fence2";
+			};
+			id = 36;
+			type = "Land_PipeWall_concretel_8m_F";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ace_isMedicalFacility";
+					expression = "_this setVariable [""ace_medical_isMedicalFacility"",_value,true];";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"BOOL"};
+							};
+							value = 0;
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item13
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9352.376,308.87897,9874.416};
+						angles[] = {6.2405434,0.009647119,6.2738504};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 54;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 53;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item14
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9354.1,308.85684,9874.427};
+						angles[] = {6.2405434,0.009647119,6.2631893};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 148;
+					type = "B_Soldier_F";
+					atlOffset = 0.010650635;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 147;
+			atlOffset = 0.010650635;
+		};
+		class Item15
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9355.987,308.79907,9874.197};
+						angles[] = {6.237883,0.009647119,6.265853};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 150;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 149;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item16
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9357.871,308.76453,9874.155};
+						angles[] = {6.237883,0.009647119,6.265853};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 152;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 151;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item17
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9359.607,308.73193,9874.101};
+						angles[] = {6.237883,0.009647119,6.265853};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 154;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 153;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item18
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9343.532,309.00015,9874.639};
+						angles[] = {6.247203,0.009647119,6.267187};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 156;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 155;
+		};
+		class Item19
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9345.255,308.98358,9874.649};
+						angles[] = {6.247203,0.009647119,6.267191};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 158;
+					type = "B_Soldier_F";
+					atlOffset = 0.010620117;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 157;
+			atlOffset = 0.010620117;
+		};
+		class Item20
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9347.142,308.93454,9874.421};
+						angles[] = {6.247203,0.009647119,6.267191};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 160;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 159;
+		};
+		class Item21
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9349.026,308.9086,9874.379};
+						angles[] = {6.2405434,0.009647119,6.2738504};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 162;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 161;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item22
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9350.763,308.89,9874.323};
+						angles[] = {6.2405434,0.009647119,6.2738504};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 164;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 163;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item23
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.799,309.27618,9901.856};
+						angles[] = {6.2418756,4.7118998,6.249864};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 166;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 165;
+		};
+		class Item24
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.7705,309.35773,9903.58};
+						angles[] = {6.2418756,4.7118998,6.249864};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 168;
+					type = "B_Soldier_F";
+					atlOffset = 0.009338379;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 167;
+			atlOffset = 0.009338379;
+		};
+		class Item25
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.981,309.41943,9905.47};
+						angles[] = {6.2418756,4.7118998,6.249864};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 170;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 169;
+		};
+		class Item26
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9377.004,309.49896,9907.3545};
+						angles[] = {6.2405477,4.7118998,6.2511935};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 172;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 171;
+		};
+		class Item27
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9377.041,309.5801,9909.091};
+						angles[] = {6.2352247,4.7118998,6.2511935};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 174;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 173;
+		};
+		class Item28
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.666,308.956,9893.011};
+						angles[] = {6.2471976,4.7118998,6.251197};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 176;
+					type = "B_Soldier_F";
+					atlOffset = 0.0012817383;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 175;
+			atlOffset = 0.0012817383;
+		};
+		class Item29
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.638,309.02966,9894.733};
+						angles[] = {6.2471976,4.7118998,6.251197};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 178;
+					type = "B_Soldier_F";
+					atlOffset = 0.011993408;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 177;
+			atlOffset = 0.011993408;
+		};
+		class Item30
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.847,309.07895,9896.622};
+						angles[] = {6.2471976,4.7118998,6.251197};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 180;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 179;
+		};
+		class Item31
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.87,309.14566,9898.508};
+						angles[] = {6.2485313,4.7118998,6.249864};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 182;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 181;
+		};
+		class Item32
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9376.908,309.2059,9900.244};
+						angles[] = {6.2418756,4.7118998,6.249864};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 184;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 183;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item33
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9328.958,312.85532,9944.342};
+						angles[] = {6.2259154,3.1298323,6.2405434};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 186;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 185;
+		};
+		class Item34
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9327.234,312.9368,9944.294};
+						angles[] = {6.2259154,3.1298323,6.2405434};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 188;
+					type = "B_Soldier_F";
+					atlOffset = 0.010681152;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 187;
+			atlOffset = 0.010681152;
+		};
+		class Item35
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9325.343,313.0177,9944.482};
+						angles[] = {6.2259154,3.1298323,6.2405434};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 190;
+					type = "B_Soldier_F";
+					atlOffset = 9.1552734e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 189;
+			atlOffset = 9.1552734e-005;
+		};
+		class Item36
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9323.458,313.09818,9944.484};
+						angles[] = {6.2259154,3.1298323,6.2405434};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 192;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 191;
+		};
+		class Item37
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9321.721,313.17545,9944.502};
+						angles[] = {6.216617,3.1298323,6.2312346};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 194;
+					type = "B_Soldier_F";
+					atlOffset = -3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 193;
+			atlOffset = -3.0517578e-005;
+		};
+		class Item38
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9337.804,312.4761,9944.308};
+						angles[] = {6.2352247,3.1298323,6.2458706};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 196;
+					type = "B_Soldier_F";
+					atlOffset = 0.0016174316;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 195;
+			atlOffset = 0.0016174316;
+		};
+		class Item39
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9336.082,312.55823,9944.261};
+						angles[] = {6.235224,3.1298323,6.239211};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 198;
+					type = "B_Soldier_F";
+					atlOffset = 0.012298584;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 197;
+			atlOffset = 0.012298584;
+		};
+		class Item40
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9334.19,312.63977,9944.448};
+						angles[] = {6.235224,3.1298323,6.239211};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 200;
+					type = "B_Soldier_F";
+					atlOffset = 0.0016174316;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 199;
+			atlOffset = 0.0016174316;
+		};
+		class Item41
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9332.306,312.7236,9944.45};
+						angles[] = {6.235224,3.1298323,6.239211};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 202;
+					type = "B_Soldier_F";
+					atlOffset = 0.002380371;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 201;
+			atlOffset = 0.002380371;
+		};
+		class Item42
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9330.568,312.7985,9944.469};
+						angles[] = {6.2259164,3.1298323,6.2485313};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 204;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 203;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item43
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.687,312.0978,9916.261};
+						angles[] = {6.2099805,1.5329132,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 206;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 205;
+		};
+		class Item44
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.778,311.98456,9914.54};
+						angles[] = {6.2245855,1.5329132,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 208;
+					type = "B_Soldier_F";
+					atlOffset = 0.010620117;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 207;
+			atlOffset = 0.010620117;
+		};
+		class Item45
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.639,311.8705,9912.644};
+						angles[] = {6.2245855,1.5329132,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 210;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 209;
+		};
+		class Item46
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.687,311.75732,9910.76};
+						angles[] = {6.2245855,1.5329132,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 212;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 211;
+		};
+		class Item47
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.715,311.64682,9909.022};
+						angles[] = {6.219275,1.5329132,6.232561};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 214;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 213;
+		};
+		class Item48
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.488,312.71304,9925.105};
+						angles[] = {6.208657,1.5329132,6.216617};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 216;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 215;
+		};
+		class Item49
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.581,312.58875,9923.386};
+						angles[] = {6.208657,1.5329132,6.216617};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 218;
+					type = "B_Soldier_F";
+					atlOffset = 0.010253906;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 217;
+			atlOffset = 0.010253906;
+		};
+		class Item50
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.442,312.4589,9921.49};
+						angles[] = {6.220601,1.5329132,6.216618};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 220;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 219;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item51
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.49,312.33765,9919.605};
+						angles[] = {6.220601,1.5329132,6.216618};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 222;
+					type = "B_Soldier_F";
+					atlOffset = 3.0517578e-005;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 221;
+			atlOffset = 3.0517578e-005;
+		};
+		class Item52
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9304.517,312.2252,9917.868};
+						angles[] = {6.2099805,1.5329132,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 224;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 223;
+		};
+		class Item53
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9314.833,313.11658,9938.945};
+						angles[] = {6.2086577,2.2770138,6.217946};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 226;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 225;
+		};
+		class Item54
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9313.736,313.09003,9937.617};
+						angles[] = {6.202033,2.2770138,6.2245865};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 228;
+					type = "B_Soldier_F";
+					atlOffset = 0.00894165;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 227;
+			atlOffset = 0.00894165;
+		};
+		class Item55
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9312.351,313.0664,9936.316};
+						angles[] = {6.209985,2.2770138,6.2245855};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 230;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 229;
+		};
+		class Item56
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9311.109,313.03516,9934.897};
+						angles[] = {6.209985,2.2770138,6.2245855};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 232;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 231;
+		};
+		class Item57
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9309.952,313.00406,9933.602};
+						angles[] = {6.20733,2.2770138,6.227246};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 234;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 233;
+		};
+		class Item58
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9367.919,308.80563,9881.488};
+						angles[] = {6.2458706,5.4081473,6.252527};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayer = 1;
+						isPlayable = 1;
+					};
+					id = 236;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 235;
+		};
+		class Item59
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9369.002,308.82904,9882.828};
+						angles[] = {6.2458706,5.4081526,6.252527};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 238;
+					type = "B_Soldier_F";
+					atlOffset = 0.006591797;
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 237;
+			atlOffset = 0.006591797;
+		};
+		class Item60
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9370.374,308.83212,9884.144};
+						angles[] = {6.244538,5.4081526,6.253861};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 240;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 239;
+		};
+		class Item61
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9371.6,308.8508,9885.575};
+						angles[] = {6.2458706,5.4081526,6.253861};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 242;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 241;
+		};
+		class Item62
+		{
+			dataType = "Group";
+			side = "West";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {9372.744,308.86603,9886.883};
+						angles[] = {6.2458706,5.4081526,6.253861};
+					};
+					side = "West";
+					flags = 6;
+					class Attributes
+					{
+						skill = 0.6;
+						rank = "CORPORAL";
+						init = " [this, [""faction"", ""Default""], [""gear"", ""Rifleman""]] call hull3_unit_fnc_init;";
+						description = "Survivor";
+						isPlayable = 1;
+					};
+					id = 244;
+					type = "B_Soldier_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male11ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.98;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 243;
+		};
+		class Item63
+		{
+			dataType = "Marker";
+			position[] = {12092.228,11.765259,12716.938};
+			name = "lootmarker";
+			type = "Empty";
+			id = 245;
+			atlOffset = -147.23474;
+		};
+		class Item64
+		{
+			dataType = "Logic";
+			class PositionInfo
+			{
+				position[] = {57.687866,1.2750536,8.387146};
+			};
+			id = 247;
+			type = "Hull3_DisableGroupMarkers_Module";
+			atlOffset = 53.300568;
+		};
+		class Item65
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9929.805,159.93445,10372.679};
+				angles[] = {6.233892,0.4794924,6.1967354};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.021719536;
+				name = "car1";
+			};
+			id = 248;
+			type = "CUP_C_Datsun_Plain";
+			atlOffset = -0.01121521;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item66
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {10421.519,120.74765,9923.585};
+				angles[] = {0.0,4.706158,0.0};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.021719536;
+				name = "car2";
+			};
+			id = 250;
+			type = "CUP_C_Golf4_red_Civ";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item67
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {10988.108,229.51944,12449.255};
+				angles[] = {6.1954126,2.9739244,6.2352223};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.021719536;
+				name = "car3";
+			};
+			id = 252;
+			type = "CUP_C_Skoda_Blue_CIV";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item68
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {11708.025,71.57557,9175.352};
+				angles[] = {0.0,0.75379026,0.0};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.027346447;
+				name = "car4";
+			};
+			id = 253;
+			type = "CUP_C_Ikarus_Chernarus";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[1]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item69
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {12673.881,6.078267,9847.902};
+				angles[] = {-0.0,4.6822124,0.0};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.024532948;
+				name = "car5";
+			};
+			id = 254;
+			type = "CUP_C_UAZ_Open_TK_CIV";
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item70
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {8827.844,215.02695,11624.51};
+				angles[] = {0.003996804,1.7255546,6.279188};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.03297327;
+				name = "car6";
+			};
+			id = 256;
+			type = "CUP_C_SUV_TK";
+			atlOffset = 0.00064086914;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item71
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {10273.223,365.39948,12037.872};
+				angles[] = {0.14304718,5.349661,0.13512339};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.030159859;
+				name = "car7";
+			};
+			id = 257;
+			type = "CUP_C_SUV_CIV";
+			atlOffset = -0.065582275;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item72
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {12288.283,87.96034,10581.173};
+				angles[] = {0.0,0.32690015,0.0};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.027346447;
+				name = "car8";
+			};
+			id = 258;
+			type = "CUP_C_Ural_Open_Civ_02";
+			atlOffset = 0.01977539;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[10]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item73
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {9653.535,87.817055,13545.727};
+				angles[] = {0.01144936,4.3108587,6.256237};
+			};
+			side = "Empty";
+			class Attributes
+			{
+				fuel = 0.03297327;
+				name = "car9";
+			};
+			id = 259;
+			type = "CUP_C_LR_Transport_CTK";
+			atlOffset = 0.9520111;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[1]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item74
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {11465.453,319.1467,11380.139};
+				angles[] = {6.2486396,4.7602534,0.030623088};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.03297327;
+				name = "car10";
+			};
+			id = 260;
+			type = "C_Quadbike_01_F";
+			atlOffset = -0.0010375977;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item75
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {13382.872,94.804306,12834.681};
+				angles[] = {6.2532005,4.69059,6.216374};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.03297327;
+				name = "car11";
+			};
+			id = 261;
+			type = "C_Quadbike_01_F";
+			atlOffset = -0.0052108765;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[4]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item76
+		{
+			dataType = "Object";
+			class PositionInfo
+			{
+				position[] = {12008.153,161.23871,12656.24};
+				angles[] = {0.0,0.9425825,0.0};
+			};
+			side = "Empty";
+			flags = 4;
+			class Attributes
+			{
+				fuel = 0.027346447;
+				name = "car12";
+			};
+			id = 262;
+			type = "C_Truck_02_transport_F";
+			atlOffset = 0.057006836;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property = "ammoBox";
+					expression = "[_this,_value] call bis_fnc_initAmmoBox;";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[] = {"STRING"};
+							};
+							value = "[[[[""FirstAidKit""],[10]],[[],[]],[[],[]],[[],[]]],false]";
+						};
+					};
+				};
+				nAttributes = 1;
+			};
+		};
+		class Item77
+		{
+			dataType = "Logic";
+			class PositionInfo
+			{
+				position[] = {9340.143,312.17508,9939.869};
+				angles[] = {6.2352247,0.0,6.2458706};
+			};
+			init = "{ _x hideObjectGlobal true } foreach (nearestTerrainObjects [this,[],20])";
+			id = 263;
+			type = "Logic";
+		};
+		class Item78
+		{
+			dataType = "Logic";
+			class PositionInfo
+			{
+				position[] = {9322.442,309.4848,9876.836};
+				angles[] = {6.2352247,0.0,6.2458706};
+			};
+			init = "{ _x hideObjectGlobal true } foreach (nearestTerrainObjects [this,[],20])";
+			id = 266;
+			type = "Logic";
+			atlOffset = 0.010070801;
+		};
+		class Item79
+		{
+			dataType = "Group";
+			side = "Civilian";
+			class Entities
+			{
+				items = 1;
+				class Item0
+				{
+					dataType = "Object";
+					class PositionInfo
+					{
+						position[] = {5144.356,8.920781,2349.163};
+					};
+					side = "Civilian";
+					flags = 7;
+					class Attributes
+					{
+						description = "Spectator";
+						isPlayable = 1;
+					};
+					id = 268;
+					type = "C_man_1";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property = "speaker";
+							expression = "_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"STRING"};
+									};
+									value = "Male05GRE";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property = "pitch";
+							expression = "_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[] = {"SCALAR"};
+									};
+									value = 0.99;
+								};
+							};
+						};
+						nAttributes = 2;
+					};
+				};
+			};
+			class Attributes{};
+			id = 267;
+		};
+	};
+};
+//};
