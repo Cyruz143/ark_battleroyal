@@ -165,7 +165,11 @@ ark_fnc_br_playerKillFeedUI = {
     };
 
     private _killMessage = format ["<t size='0.5' color='#0000cc' font='EtelkaMonospaceProBold'>%1</t><t size='0.5' color='#FFFFFF' font='EtelkaMonospaceProBold'> killed </t><t size='0.5' color='#FF0000' font='EtelkaMonospaceProBold'>%2</t>",_attackerName,_victimName];
-    
+
+    if (isNull _attacker) then {
+        _killMessage = format ["<t size='0.5' color='#0000cc' font='EtelkaMonospaceProBold'>%1</t> <t size='0.5' color='#FFFFFF' font='EtelkaMonospaceProBold'>was killedt</t>",_victimName];
+    };
+
     if(_attacker == _victim) then {
         _killMessage = format ["<t size='0.5' color='#0000cc' font='EtelkaMonospaceProBold'>%1</t> <t size='0.5' color='#FFFFFF' font='EtelkaMonospaceProBold'>bled out</t>",_victimName];
     };

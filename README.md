@@ -36,3 +36,9 @@ Battle Royale gimmick mission for ARK
 
 ## Future Features:
 * Zone randomisation (not always centre)
+* Optional paradrop start
+* Randomise car spawn locations
+* Move units from BLU to CIV
+* Scale loot spawns to building size
+* Clean up gear (remove thermal sights)
+* Make debug an option in description.ext
