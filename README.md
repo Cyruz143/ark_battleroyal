@@ -4,6 +4,7 @@ Battle Royale gimmick mission for ARK
 ## Looting System
 * Split loot types [medical/guns/gear]
 * Randomise loot
+* Scale loot spawns to building size
 * DynamicSimulation
 
 ## Zone Restriction System
@@ -28,6 +29,7 @@ Battle Royale gimmick mission for ARK
 * Players alive counter
 * Random crate drops
 * Ending music
+* Debug in description.ext
 
 ## Misc:
 * setFriend to make FFA
@@ -39,6 +41,4 @@ Battle Royale gimmick mission for ARK
 * Optional paradrop start
 * Randomise car spawn locations
 * Move units from BLU to CIV
-* Scale loot spawns to building size
 * Clean up gear (remove thermal sights)
-* Make debug an option in description.ext

@@ -29,16 +29,20 @@ nextZone setMarkerColor "ColorKhaki";
 nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes select (currentZoneIndex + 1)];
 
 ark_fnc_br_spawnLoot = {
-    private _markerPos = getMarkerPos "lootMarker";
-    private _buildingArray = _markerPos nearObjects ["Building", 4000];
+    private _buildingArray = zoneCenter nearObjects ["Building", 4000];
+    private _buildingCount = 0;
+    private _lootCount = 0;
 
     {
+        _buildingCount = _buildingCount + 1;
         private _buildingPositions = _x buildingPos -1;
         private _scaledBuildingPositions = [];
-        for "_i" from 0 to (count _buildingPositions -1) step 3 do {
+        for "_i" from 0 to (count _buildingPositions -1) step 4 do {
             _scaledBuildingPositions pushBack (_buildingPositions select _i);
         };
         {
+            _lootCount = _lootCount + 1;
+          
             private _randomNum = ceil (random 3);
             switch (_randomNum) do {
                 case 1: {
@@ -111,6 +115,10 @@ ark_fnc_br_spawnLoot = {
             };
         } forEach _scaledBuildingPositions;
     } forEach _buildingArray;
+    if (ark_br_debugState == 1) then {
+        systemChat format["Total buildings in area: %1 Total loot spots: %2", _buildingCount];
+        systemChat format["Total loot spots: %1", _lootCount];
+    };
 };
 
 ark_fnc_br_lootCrate = {
