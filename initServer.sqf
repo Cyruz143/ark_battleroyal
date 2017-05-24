@@ -30,7 +30,7 @@ nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes selec
 
 ark_fnc_br_spawnLoot = {
     private _markerPos = getMarkerPos "lootMarker";
-    private _houseArray = nearestTerrainObjects [_markerPos, ["house"], 4000, false];
+    private _houseArray = nearestTerrainObjects [_markerPos, ["Building"], 4000, false];
 
     {
         _buildingPositions = [_x, 2] call BIS_fnc_buildingPositions;
