@@ -12,7 +12,7 @@ zoneSizes = [4500,4000,3500,3000,2500,2000,1500,1000,500,250,100];
 currentZoneIndex = 0; // this could be made a mission param to shorten game lengths / player counts (gimmicks?)
 zoneCounter = 1;
 lastZone = false;
-zoneCenter = getMarkerPos "lootMarker"; //choose a more appropriate name?
+zoneCenter = getMarkerPos "center_zone_marker";
 currentZoneMarker = createMarker ["currentZone", zoneCenter];
 nextZone = createMarker ["nextZone", zoneCenter];
 
@@ -116,7 +116,7 @@ ark_fnc_br_spawnLoot = {
         } forEach _scaledBuildingPositions;
     } forEach _buildingArray;
     if (ark_br_debugState == 1) then {
-        systemChat format["Total buildings in area: %1 Total loot spots: %2", _buildingCount];
+        systemChat format["Total buildings in area: %1", _buildingCount];
         systemChat format["Total loot spots: %1", _lootCount];
     };
 };
@@ -153,9 +153,36 @@ ark_fnc_br_lootCrate = {
     _lootCrate addMagazineCargoGlobal ["HandGrenade", 5];
 };
 
+ark_fnc_br_spawnVehicles = {
+    private _roadsArray = zoneCenter nearRoads 3500;
+    private _vehiclesArray = ["CUP_C_Octavia_CIV", "CUP_C_Skoda_Blue_CIV", "CUP_C_UAZ_Open_TK_CIV", "CUP_C_Ural_Civ_03", "CUP_C_Datsun_4seat" ,"CUP_C_Golf4_random_Civ", "CUP_C_Golf4_kitty_Civ", "C_Offroad_01_repair_F", "C_Quadbike_01_white_F", "C_Offroad_02_unarmed_orange_F", "C_Offroad_02_unarmed_blue_F", "CUP_C_Ikarus_TKC", "CUP_C_Ikarus_Chernarus"];
+
+    for "_i" from 1 to 12 do {
+        private _roadSpawnArea = selectRandom _roadsArray;        
+        private _roadPos = getpos _roadSpawnArea;
+        private _selectedVehicle = selectRandom _vehiclesArray;
+
+        if (isOnRoad _roadSpawnArea) then {
+            private _veh = _selectedVehicle createVehicle _roadPos;
+            _veh setDir (getDir _roadSpawnArea);
+            _veh setVectorUp surfaceNormal position _veh;
+            _veh setfuel 0.1;
+            [_veh] call ark_fnc_br_lootCrate;
+
+            if (ark_br_debugState == 1) then {
+                private _vehPos = getpos _veh;
+                private _markerstr = createMarker ["markername" + (str _vehPos), _vehPos];
+                _markerstr setMarkerColor "ColorPink";
+                _markerstr setMarkerShape "ICON";
+                _markerstr setMarkerType "hd_dot";
+            };
+        };
+    };
+};
+
 ark_fnc_br_startingCountdownServer = {
     uiSleep 20;
-    {[_x] call ark_fnc_br_lootCrate} forEach [startCrate,car1,car2,car3,car4,car5,car6,car7,car8,car9,car10,car11,car12];
+    {[_x] call ark_fnc_br_lootCrate} forEach [startCrate];
     {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8];
 };
 
@@ -267,6 +294,7 @@ ark_fnc_br_init = {
 };
 
 [] spawn ark_fnc_br_spawnLoot;
+[] spawn ark_fnc_br_spawnVehicles;
 
 waitUntil {
   [] call hull3_mission_fnc_hasSafetyTimerEnded;

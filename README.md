@@ -23,7 +23,7 @@ Battle Royale gimmick mission for ARK
 * Disabled stamina
 
 ## Features:
-* Cars
+* Randomly spawned cars
 * Countdown to zone move
 * Kill feed
 * Players alive counter
@@ -39,6 +39,5 @@ Battle Royale gimmick mission for ARK
 ## Future Features:
 * Zone randomisation (not always centre)
 * Optional paradrop start
-* Randomise car spawn locations
 * Move units from BLU to CIV
 * Clean up gear (remove thermal sights)
