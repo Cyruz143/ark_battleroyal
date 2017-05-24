@@ -33,7 +33,11 @@ ark_fnc_br_spawnLoot = {
     private _buildingArray = _markerPos nearObjects ["Building", 4000];
 
     {
-        _buildingPositions = [_x, 2] call BIS_fnc_buildingPositions;
+        private _buildingPositions = _x buildingPos -1;
+        private _scaledBuildingPositions = [];
+        for "_i" from 0 to (count _buildingPositions -1) step 3 do {
+            _scaledBuildingPositions pushBack (_buildingPositions select _i);
+        };
         {
             private _randomNum = ceil (random 3);
             switch (_randomNum) do {
@@ -105,7 +109,7 @@ ark_fnc_br_spawnLoot = {
                 };
                 default { hint format ["%1", _randomNum] };
             };
-        } forEach _buildingPositions;
+        } forEach _scaledBuildingPositions;
     } forEach _buildingArray;
 };
 
