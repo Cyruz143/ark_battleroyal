@@ -1,8 +1,3 @@
-// Kill civs (for spec purposes!)
-if ((side player) == civilian) then {
-    player setDamage 1;
-};
-
 // Disable ST grouping
 STHUD_UIMode = 0;
 STGI_Enabled = false;
@@ -44,21 +39,40 @@ ark_fnc_br_playerIntro = {
         ["So fight for survival.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
         ["and see if you're worth it","<t align = 'center' shadow = '1' size = '1' font='PuristaBold'>%1</t><br/>"]],0,0,"<t color='#FF0000' align='center'>%1</t>"] spawn BIS_fnc_typeText;
         uiSleep 8;
+        
+        if (ark_br_startStyle == 1) then {
+            player moveInCargo c130_start_plane;
+            player enableSimulation true;
+        };
+        
         ["BIS_blackStart", true] call BIS_fnc_blackIn;
     };
     
-    waitUntil
-    {
-      [] call hull3_mission_fnc_hasSafetyTimerEnded;
+    if (ark_br_startStyle == 0) then {
+        waitUntil
+        {
+          [] call hull3_mission_fnc_hasSafetyTimerEnded;
+        };
+        player enableSimulation true;
+        playSound "Alarm";
+        
+        { 
+            private _countDownText = format ["Gates open in <t color='#CC0000'>%1</t>",_x];
+            [_countDownText,-1,-1,1,0,0,txt3Layer] spawn BIS_fnc_dynamicText;
+            uiSleep 1;
+        } forEach [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
     };
-    player enableSimulation true;
-    playSound "Alarm";
-    
-    { 
-        private _countDownText = format ["Gates open in <t color='#CC0000'>%1</t>",_x];
-        [_countDownText,-1,-1,1,0,0,txt3Layer] spawn BIS_fnc_dynamicText;
-        uiSleep 1;
-    } forEach [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1]
+};
+
+ark_fnc_br_playerParachute = {
+    player allowdamage false;
+    MoveOut player;
+    waituntil {(getpos player select 2) < 300};
+    _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
+    _chute setPos (getPos player);
+    player moveInDriver _chute;
+    waituntil {isTouchingGround player};
+    player allowDamage true;
 };
 
 ark_fnc_br_updateZone = {
@@ -91,6 +105,12 @@ ark_fnc_br_endMusic = {
     while { true } do {
         if ((count playableUnits) < 2 ) exitWith {
             playMusic "champions";
+            if (alive player) then {
+                uiSleep 3;
+                [player,"Acts_JetsFlyoverCheering_2"] remoteexec ["switchMove", -2];
+            } else {
+                [2, playableUnits select 0, -2, getPos (playableUnits select 0)] call ace_spectator_fnc_setCameraAttributes;
+            };
         };
     uiSleep 2;
     };

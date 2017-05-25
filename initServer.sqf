@@ -13,6 +13,7 @@ currentZoneIndex = 0; // this could be made a mission param to shorten game leng
 zoneCounter = 1;
 lastZone = false;
 zoneCenter = getMarkerPos "center_zone_marker";
+planeExit = getMarkerPos "plane_exit_marker";
 currentZoneMarker = createMarker ["currentZone", zoneCenter];
 nextZone = createMarker ["nextZone", zoneCenter];
 
@@ -156,9 +157,12 @@ ark_fnc_br_lootCrate = {
 ark_fnc_br_spawnVehicles = {
     private _roadsArray = zoneCenter nearRoads 3500;
     private _vehiclesArray = ["CUP_C_Octavia_CIV", "CUP_C_Skoda_Blue_CIV", "CUP_C_UAZ_Open_TK_CIV", "CUP_C_Ural_Civ_03", "CUP_C_Datsun_4seat" ,"CUP_C_Golf4_random_Civ", "CUP_C_Golf4_kitty_Civ", "C_Offroad_01_repair_F", "C_Quadbike_01_white_F", "C_Offroad_02_unarmed_orange_F", "C_Offroad_02_unarmed_blue_F", "CUP_C_Ikarus_TKC", "CUP_C_Ikarus_Chernarus"];
+    private _playerCount = (count playableUnits) / 2;
 
-    for "_i" from 1 to 12 do {
-        private _roadSpawnArea = selectRandom _roadsArray;        
+    for "_i" from 1 to _playerCount do {
+        private _roadSpawnArea = selectRandom _roadsArray;
+        private _roadArrayIndex = _roadsArray find _roadSpawnArea;
+        _roadsArray deleteAt _roadArrayIndex;
         private _roadPos = getpos _roadSpawnArea;
         private _selectedVehicle = selectRandom _vehiclesArray;
 
@@ -180,9 +184,50 @@ ark_fnc_br_spawnVehicles = {
     };
 };
 
+ark_fnc_br_spawnPlane = {
+    private _grp = createGroup [civilian, true];
+    private _pilot = _grp createUnit ["C_man_pilot_F", [0,0,0], [], 0, "NONE"];
+    c130_start_plane = createVehicle ["CUP_B_C130J_GB", [0,0,1500], [], 0, "FLY"];
+    _pilot moveInDriver c130_start_plane;
+    c130_start_plane flyInHeight 1000;
+
+    clearItemCargoGlobal c130_start_plane;
+    clearMagazineCargoGlobal c130_start_plane;
+    clearWeaponCargoGlobal c130_start_plane;
+    clearBackpackCargoGlobal c130_start_plane;
+
+    private _wp = _grp addWaypoint [zoneCenter, 0];
+    _wp setWaypointType "MOVE";
+    _wp setWaypointBehaviour "CARELESS";
+    _wp setWaypointCombatMode "BLUE";
+    _wp setWaypointSpeed "FULL";
+
+    private _wp1 = _grp addWaypoint [planeExit, 0];
+    _wp1 setWaypointType "MOVE";
+    _wp1 setWaypointBehaviour "CARELESS";
+    _wp1 setWaypointCombatMode "BLUE";
+    _wp1 setWaypointSpeed "FULL";
+
+    waitUntil { c130_start_plane inArea currentZoneMarker };
+
+    private _cargo = crew c130_start_plane;
+    private _removePilot = _cargo find _pilot;
+    _cargo deleteAt _removePilot;
+
+    {
+        remoteExec ["ark_fnc_br_playerParachute", _x];
+        uiSleep 2;
+    } forEach _cargo;
+
+    waitUntil { c130_start_plane inArea "plane_exit_marker" };
+
+    deleteVehicle c130_start_plane;
+    deleteVehicle _pilot;
+};
+
 ark_fnc_br_startingCountdownServer = {
     uiSleep 20;
-    {[_x] call ark_fnc_br_lootCrate} forEach [startCrate];
+    [startCrate] call ark_fnc_br_lootCrate;
     {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8];
 };
 
@@ -296,9 +341,17 @@ ark_fnc_br_init = {
 [] spawn ark_fnc_br_spawnLoot;
 [] spawn ark_fnc_br_spawnVehicles;
 
+if (ark_br_startStyle == 1) then {
+    [] spawn ark_fnc_br_spawnPlane;
+    {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8,startCrate];
+};
+
 waitUntil {
   [] call hull3_mission_fnc_hasSafetyTimerEnded;
 };
 
 [] call ark_fnc_br_init;
-[] spawn ark_fnc_br_startingCountdownServer;
+
+if (ark_br_startStyle == 0) then {
+    [] spawn ark_fnc_br_startingCountdownServer;
+};

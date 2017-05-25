@@ -12,7 +12,7 @@ class Header
 {
     gameType = LastMan;
     minPlayers = 1;
-    maxPlayers = 51;
+    maxPlayers = 50;
 };
 
 respawn = 1;
@@ -66,5 +66,13 @@ class Params {
         texts[] = {"Off", "On"};
         default = 0;
         code = "ark_br_debugState = %1";
+    };
+
+    class ARK_BR_StartType {
+        title = "Type of game start";
+        values[] = {0,1};
+        texts[] = {"Hunger games", "Airdrop"};
+        default = 0;
+        code = "ark_br_startStyle = %1";
     };
 };
