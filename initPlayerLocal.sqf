@@ -59,7 +59,7 @@ ark_fnc_br_playerIntro = {
         
         { 
             private _countDownText = format ["Gates open in <t color='#CC0000'>%1</t>",_x];
-            [_countDownText,-1,-1,5,1,0,txt3Layer] spawn BIS_fnc_dynamicText;
+            [_countDownText,-1,-1,1,0,0,txt3Layer] spawn BIS_fnc_dynamicText;
             uiSleep 1;
         } forEach [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
     };
@@ -117,7 +117,7 @@ ark_fnc_br_endMusic = {
             uiSleep 5;
 
             private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_brWinner)];
-            [_winnerMessage,-1,-1,1,0,0,txt6Layer] spawn BIS_fnc_dynamicText;
+            [_winnerMessage,-1,-1,5,1,0,txt6Layer] spawn BIS_fnc_dynamicText;
         };
     uiSleep 2;
     };
