@@ -16,28 +16,26 @@ Battle Royale gimmick mission for ARK
 
 ## Players Features
 * Random uniform assignment
-* Starting arena
+* Starting arena or C130 insert
 * Lock players for loading/start
 * Delay of gate removal for players to run + visual / sound
 * Disabled ST stuff to avoid grouping
 * Disabled stamina
 
 ## Features:
-* Randomly spawned cars
+* Randomly spawned cars scaled to 50% of players
 * Countdown to zone move
 * Kill feed
 * Players alive counter
 * Random crate drops
-* Ending music
-* Debug in description.ext
+* Ending sequence
+* Switchable debug params
 
 ## Misc:
 * setFriend to make FFA
 * Breifing
-* Spectator slot
 
 ## Future Features:
 * Zone randomisation (not always centre)
-* Optional paradrop start
 * Move units from BLU to CIV
 * Clean up gear (remove thermal sights)

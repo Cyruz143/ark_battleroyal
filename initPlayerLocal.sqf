@@ -9,6 +9,7 @@ player enableStamina false;
 txt3Layer = "txt3" call BIS_fnc_rscLayer;
 txt4Layer = "txt4" call BIS_fnc_rscLayer;
 txt5Layer = "txt5" call BIS_fnc_rscLayer;
+txt6Layer = "txt6" call BIS_fnc_rscLayer;
 currentZone = objNull;
 
 // Update round time + player counts
@@ -58,7 +59,7 @@ ark_fnc_br_playerIntro = {
         
         { 
             private _countDownText = format ["Gates open in <t color='#CC0000'>%1</t>",_x];
-            [_countDownText,-1,-1,1,0,0,txt3Layer] spawn BIS_fnc_dynamicText;
+            [_countDownText,-1,-1,5,1,0,txt3Layer] spawn BIS_fnc_dynamicText;
             uiSleep 1;
         } forEach [20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
     };
@@ -105,11 +106,18 @@ ark_fnc_br_endMusic = {
     while { true } do {
         if ((count playableUnits) < 2 ) exitWith {
             playMusic "champions";
+            private _brWinner = playableUnits select 0;
+            
             if (alive player) then {
                 [player,"Acts_JetsShooterShootingReady_loop"] remoteexec ["switchMove", -2];
             } else {
-                [2, playableUnits select 0, -2, getPos (playableUnits select 0)] call ace_spectator_fnc_setCameraAttributes;
+                [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
             };
+            
+            uiSleep 5;
+
+            private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_brWinner)];
+            [_winnerMessage,-1,-1,1,0,0,txt6Layer] spawn BIS_fnc_dynamicText;
         };
     uiSleep 2;
     };
