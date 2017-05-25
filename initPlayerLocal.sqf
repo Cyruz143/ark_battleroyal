@@ -106,8 +106,7 @@ ark_fnc_br_endMusic = {
         if ((count playableUnits) < 2 ) exitWith {
             playMusic "champions";
             if (alive player) then {
-                uiSleep 3;
-                [player,"Acts_JetsFlyoverCheering_2"] remoteexec ["switchMove", -2];
+                [player,"Acts_JetsShooterShootingReady_loop"] remoteexec ["switchMove", -2];
             } else {
                 [2, playableUnits select 0, -2, getPos (playableUnits select 0)] call ace_spectator_fnc_setCameraAttributes;
             };

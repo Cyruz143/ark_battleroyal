@@ -188,6 +188,7 @@ ark_fnc_br_spawnPlane = {
     private _grp = createGroup [civilian, true];
     private _pilot = _grp createUnit ["C_man_pilot_F", [0,0,0], [], 0, "NONE"];
     c130_start_plane = createVehicle ["CUP_B_C130J_GB", [0,0,1500], [], 0, "FLY"];
+    publicVariable "c130_start_plane";
     _pilot moveInDriver c130_start_plane;
     c130_start_plane flyInHeight 1000;
 
