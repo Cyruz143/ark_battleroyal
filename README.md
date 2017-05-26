@@ -39,3 +39,4 @@ Battle Royale gimmick mission for ARK
 * Zone randomisation (not always centre)
 * Move units from BLU to CIV
 * Clean up gear (remove thermal sights)
+* Plane starting point randomisation
