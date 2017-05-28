@@ -7,6 +7,7 @@ west setFriend [west, 0];
 // Set global variables
 txt1Layer = "txt1" call BIS_fnc_rscLayer;
 txt2Layer = "txt2" call BIS_fnc_rscLayer;
+txt7Layer = "txt7" call BIS_fnc_rscLayer;
 zoneReductionTime = 180;
 zoneSizes = [4500,4000,3500,3000,2500,2000,1500,1000,500,250,100];
 currentZoneIndex = 0; // this could be made a mission param to shorten game lengths / player counts (gimmicks?)
@@ -157,7 +158,7 @@ ark_fnc_br_lootCrate = {
 ark_fnc_br_spawnVehicles = {
     private _roadsArray = zoneCenter nearRoads 3500;
     private _vehiclesArray = ["CUP_C_Octavia_CIV", "CUP_C_Skoda_Blue_CIV", "CUP_C_UAZ_Open_TK_CIV", "CUP_C_Ural_Civ_03", "CUP_C_Datsun_4seat" ,"CUP_C_Golf4_random_Civ", "CUP_C_Golf4_kitty_Civ", "C_Offroad_01_repair_F", "C_Quadbike_01_white_F", "C_Offroad_02_unarmed_orange_F", "C_Offroad_02_unarmed_blue_F", "CUP_C_Ikarus_TKC", "CUP_C_Ikarus_Chernarus"];
-    private _playerCount = (count playableUnits) / 2;
+    private _playerCount = count playableUnits;
 
     for "_i" from 1 to _playerCount do {
         private _roadSpawnArea = selectRandom _roadsArray;
@@ -210,18 +211,18 @@ ark_fnc_br_spawnPlane = {
     _wp1 setWaypointSpeed "FULL";
 
     waitUntil { c130_start_plane inArea currentZoneMarker };
-
     private _cargo = crew c130_start_plane;
     private _removePilot = _cargo find _pilot;
     _cargo deleteAt _removePilot;
+    
+    private _ejectMessage = "You're inside the zone<br />Eject before the plane leaves the area";
 
     {
-        remoteExec ["ark_fnc_br_playerParachute", _x];
-        uiSleep 2;
+        "alarm_independent" remoteExec ["playSound", _x];
+        [_ejectMessage,-1,-1,5,0,0,txt7Layer] remoteExec ["BIS_fnc_dynamicText", _x];
     } forEach _cargo;
 
     waitUntil { c130_start_plane inArea "plane_exit_marker" };
-
     deleteVehicle c130_start_plane;
     deleteVehicle _pilot;
 };

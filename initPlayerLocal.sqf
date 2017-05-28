@@ -1,3 +1,6 @@
+// Eject EH for paradrop
+player addEventHandler ["GetOutMan", {call ark_fnc_br_playerParachute}];
+
 // Disable ST grouping
 STHUD_UIMode = 0;
 STGI_Enabled = false;
@@ -34,13 +37,14 @@ ark_fnc_br_playerIntro = {
 
     MissionIntro = [] spawn {
         ["BIS_blackStart", false] call BIS_fnc_blackOut;
+
         sleep 5;
         playMusic "RadioAmbient9";
         [[["Life is a game.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
         ["So fight for survival.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
         ["and see if you're worth it","<t align = 'center' shadow = '1' size = '1' font='PuristaBold'>%1</t><br/>"]],0,0,"<t color='#FF0000' align='center'>%1</t>"] spawn BIS_fnc_typeText;
         uiSleep 8;
-        
+
         if (ark_br_startStyle == 1) then {
             player enableSimulation true;
             player moveInCargo c130_start_plane;
@@ -50,7 +54,7 @@ ark_fnc_br_playerIntro = {
                 uiSleep 1;
             };
         };
-        
+
         ["BIS_blackStart", true] call BIS_fnc_blackIn;
     };
     
@@ -71,14 +75,18 @@ ark_fnc_br_playerIntro = {
 };
 
 ark_fnc_br_playerParachute = {
-    player allowdamage false;
-    MoveOut player;
-    waituntil {(getpos player select 2) < 300};
-    _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
-    _chute setPos (getPos player);
-    player moveInDriver _chute;
-    waituntil {isTouchingGround player};
-    player allowDamage true;
+    if ((getpos player select 2) > 300) then {      
+        [] spawn {
+            player allowdamage false;
+            waituntil {(getpos player select 2) < 300};
+            _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
+            _chute setPos (getPos player);
+            player moveInDriver _chute;
+            
+            waituntil {isTouchingGround player};
+            player allowDamage true;
+        };
+    };
 };
 
 ark_fnc_br_updateZone = {
