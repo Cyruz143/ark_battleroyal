@@ -47,12 +47,6 @@ ark_fnc_br_playerIntro = {
 
         if (ark_br_startStyle == 1) then {
             player enableSimulation true;
-            player moveInCargo c130_start_plane;
-            
-            while {vehicle player == player} do {
-                player moveInCargo c130_start_plane;
-                uiSleep 1;
-            };
         };
 
         ["BIS_blackStart", true] call BIS_fnc_blackIn;

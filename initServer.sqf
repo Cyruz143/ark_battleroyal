@@ -334,6 +334,13 @@ ark_fnc_br_spawnCrateDrop = {
     detach _ammoBox; 
 };
 
+ark_fnc_br_movePlayersInPlane = {
+    {
+        [player, "c130_start_plane"] remoteExec ["moveInCargo", _x];
+        uiSleep 0.25;
+    } forEach playableUnits;
+};
+
 ark_fnc_br_init = {
     startTime = diag_tickTime;
 
@@ -356,4 +363,6 @@ waitUntil {
 
 if (ark_br_startStyle == 0) then {
     [] spawn ark_fnc_br_startingCountdownServer;
+} else {
+    [] spawn ark_fnc_br_movePlayersInPlane;
 };
