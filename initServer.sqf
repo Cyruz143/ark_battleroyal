@@ -32,6 +32,12 @@ nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes selec
 
 ark_fnc_br_spawnLoot = {
     private _buildingArray = zoneCenter nearObjects ["Building", 4000];
+    // Scale building amount if required + adjust forEach loop to use _scaledBuildings
+    /* private _scaledBuildings = [];
+    for "_i" from 0 to (count _buildingArray) step 3 do {
+        _scaledBuildings pushBack (_buildingArray select _i);
+    }; */
+
     private _buildingCount = 0;
     private _lootCount = 0;
 
@@ -336,7 +342,7 @@ ark_fnc_br_spawnCrateDrop = {
 
 ark_fnc_br_movePlayersInPlane = {
     {
-        [player, "c130_start_plane"] remoteExec ["moveInCargo", _x];
+        [_x,c130_start_plane] remoteExec ["moveInCargo", _x];
         uiSleep 0.25;
     } forEach playableUnits;
 };
@@ -353,6 +359,7 @@ ark_fnc_br_init = {
 if (ark_br_startStyle == 1) then {
     [] spawn ark_fnc_br_spawnPlane;
     {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8,startCrate];
+    [] spawn ark_fnc_br_movePlayersInPlane;
 };
 
 waitUntil {
@@ -363,6 +370,4 @@ waitUntil {
 
 if (ark_br_startStyle == 0) then {
     [] spawn ark_fnc_br_startingCountdownServer;
-} else {
-    [] spawn ark_fnc_br_movePlayersInPlane;
 };
