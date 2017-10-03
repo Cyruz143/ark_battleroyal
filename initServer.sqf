@@ -4,12 +4,43 @@
 // Set everyone hostile to each other
 west setFriend [west, 0];
 
-// Generate weapon arrays
-allPrimaryWeapons = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 1 } } )" configClasses ( configFile >> "cfgWeapons" );
-allSecondaryWeapons = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 2 } } )" configClasses ( configFile >> "cfgWeapons" );
-allBackpacks = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getNumber ( _x >> 'isbackpack' ) isEqualTo 1 } } )" configClasses ( configFile >> "cfgVehicles" );
-allVests = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsVests' )" configClasses ( configFile >> "cfgVehicles" );
-allHelmets = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsHeadgear' )" configClasses ( configFile >> "cfgVehicles" );
+// Setup emtpy arrays for loot
+allPrimaryWeapons = [];
+allSecondaryWeapons = [];
+allBackpacks = [];
+allVests = [];
+allHelmets = [];
+
+// Fill loot arrays
+private _primaryWeaponConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 1 } } )" configClasses ( configFile >> "cfgWeapons" );
+{  private _primaryWeaponString = configName (_x); 
+    allPrimaryWeapons pushBack _primaryWeaponString; 
+}  forEach _primaryWeaponConfig; 
+
+private _secondaryWeaponConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 2 } } )" configClasses ( configFile >> "cfgWeapons" );
+{  private _secondaryWeaponString = configName (_x); 
+    allSecondaryWeapons pushBack _secondaryWeaponString; 
+}  forEach _secondaryWeaponConfig; 
+
+private _backpackConfig = "( getNumber ( _x >> ""scope"" ) isEqualTo 2 && { getNumber ( _x >> ""isbackpack"" ) isEqualTo 1 && { getNumber ( _x >> ""maximumLoad"" ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
+{  private _backpackString = configName (_x); 
+    allBackpacks pushBack _backpackString; 
+}  forEach _backpackConfig;
+
+private _vestConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsVests' } )" configClasses ( configFile >> "cfgVehicles" );
+{  private _vestString = configName (_x); 
+    allVests pushBack _vestString; 
+}  forEach _vestConfig;
+
+private _helmetConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsHeadgear' } )" configClasses ( configFile >> "cfgVehicles" );
+{  private _helmetString = configName (_x); 
+    allHelmets pushBack _helmetString; 
+}  forEach _helmetConfig;
+
+// Loot blacklist
+{  private _brokenSecondary = allSecondaryWeapons find _x;
+    allSecondaryWeapons deleteAt _brokenSecondary;
+} forEach ["hlc_pistol_P239_40"];
 
 // Set global variables
 txt1Layer = "txt1" call BIS_fnc_rscLayer;
@@ -61,9 +92,9 @@ ark_fnc_br_spawnLoot = {
             private _randomNum = ceil (random 3);
             switch (_randomNum) do {
                 case 1: {
-                    private _primaryWeaponArray = selectRandom allPrimaryWeapons;
-                    private _secondaryWeaponArray = selectRandom allSecondaryWeapons;
-                    private _weapon = selectRandom [_primaryWeaponArray,_secondaryWeaponArray];
+                    private _primaryWeapon = selectRandom allPrimaryWeapons;
+                    private _secondaryWeapon = selectRandom allSecondaryWeapons;
+                    private _weapon = selectRandom [_primaryWeapon,_secondaryWeapon];
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines");
                     private _magazines = selectRandom _magazineArray;
                     
@@ -84,10 +115,10 @@ ark_fnc_br_spawnLoot = {
                     };
                 };
                 case 2: {
-                    private _backpackArray = selectRandom allBackpacks;
-                    private _vestArray = selectRandom allVests;
-                    private _headgearArray = selectRandom allHelmets;
-                    private _item = selectRandom [_backpackArray,_vestArray,_headgearArray];
+                    private _backpack = selectRandom allBackpacks;
+                    private _vest = selectRandom allVests;
+                    private _headgear = selectRandom allHelmets;
+                    private _item = selectRandom [_backpack,_vest,_headgear];
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
                     _itemBox setDir random 360;
@@ -144,15 +175,15 @@ ark_fnc_br_lootCrate = {
     clearWeaponCargoGlobal _lootCrate; 
     clearBackpackCargoGlobal _lootCrate; 
 
-    private _backpackArray = selectRandom allBackpacks;
-    private _vestArray = selectRandom allVests;
-    private _headgearArray = selectRandom allHelmets;
-    private _medicalArray = selectRandom ["ACE_fieldDressing","ACE_morphine"];
+    private _selectedBackpack = selectRandom allBackpacks;
+    private _selectedVest = selectRandom allVests;
+    private _selectedHeadgear = selectRandom allHelmets;
+    private _selectedMedical = selectRandom ["ACE_fieldDressing","ACE_morphine"];
 
-    _lootCrate addBackpackCargoGlobal [_backpackArray, 1];
-    _lootCrate addItemCargoGlobal [ _vestArray, 1];
-    _lootCrate addItemCargoGlobal [_headgearArray, 1];
-    _lootCrate addItemCargoGlobal [_medicalArray, 10];
+    _lootCrate addBackpackCargoGlobal [_selectedBackpack, 1];
+    _lootCrate addItemCargoGlobal [_selectedVest, 1];
+    _lootCrate addItemCargoGlobal [_selectedHeadgear, 1];
+    _lootCrate addItemCargoGlobal [_selectedMedical, 10];
 
     private _primaryWeapon = selectRandom allPrimaryWeapons;
     private _secondaryWeapon = selectRandom allSecondaryWeapons;
