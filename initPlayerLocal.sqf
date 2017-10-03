@@ -89,7 +89,7 @@ ark_fnc_br_updateZone = {
     ];
     currentZone = _currentZone;
 };
-                               
+
 ark_fnc_br_checkPlayersOutSideZone = {
     while { true } do {
         if !(currentZone isEqualTo objNull) then {
