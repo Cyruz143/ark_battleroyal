@@ -10,6 +10,7 @@ allSecondaryWeapons = [];
 allBackpacks = [];
 allVests = [];
 allHelmets = [];
+allVehicles = [];
 
 // Fill loot arrays
 private _backpackConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getNumber ( _x >> 'isbackpack' ) isEqualTo 1 && { getNumber ( _x >> 'maximumLoad' ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
@@ -32,6 +33,8 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
         default {};
     };
 } forEach _itemConfig;
+
+
 
 // Loot blacklist
 {  private _brokenSecondary = allSecondaryWeapons find _x;
@@ -89,16 +92,15 @@ ark_fnc_br_spawnLoot = {
             switch (_randomNum) do {
                 case 1: {
                     private _primaryWeapon = selectRandom allPrimaryWeapons;
-                    private _secondaryWeapon = selectRandom allSecondaryWeapons;
-                    private _weapon = selectRandom [_primaryWeapon,_secondaryWeapon];
-                    private _magazineArray = getArray (configFile >> "CfgWeapons" >> _weapon >> "magazines");
+                    private _magazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
+                    if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
                     private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
                     _itemBox setDir random 360;
                     _itemBox setPos _x;
                     _itemBox setVectorUp surfaceNormal position _itemBox;
-                    _itemBox addWeaponCargoGlobal [_weapon,1];
+                    _itemBox addWeaponCargoGlobal [_primaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
                     _itemBox enableDynamicSimulation true;
 
@@ -136,13 +138,17 @@ ark_fnc_br_spawnLoot = {
                     };
                 };
                 case 3: {
-                    private _medicalItem = selectRandom ["ACE_fieldDressing","ACE_morphine"];
+                    private _secondaryWeapon = selectRandom allSecondaryWeapons;
+                    private _magazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
+                    if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
+                    private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
                     _itemBox setDir random 360;
                     _itemBox setPos _x;
                     _itemBox setVectorUp surfaceNormal position _itemBox;
-                    _itemBox addItemCargoGlobal [_medicalItem,1];
+                    _itemBox addWeaponCargoGlobal [_secondaryWeapon,1];
+                    _itemBox addMagazineCargoGlobal [_magazines,3];
                     _itemBox enableDynamicSimulation true;
                     
                     if (ark_br_debugState == 1) then {
@@ -183,9 +189,13 @@ ark_fnc_br_lootCrate = {
 
     private _primaryWeapon = selectRandom allPrimaryWeapons;
     private _secondaryWeapon = selectRandom allSecondaryWeapons;
+    
     private _primaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
+    if (count _primaryWeaponmagazineArray == 0 || isnil "_primaryWeaponmagazineArray") exitWith {};
     private _primaryWeaponmagazine = selectRandom _primaryWeaponmagazineArray;
+    
     private _secondaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
+    if (count _secondaryWeaponmagazineArray == 0 || isnil "_secondaryWeaponmagazineArray") exitWith {};
     private _secondaryWeaponmagazine = selectRandom _secondaryWeaponmagazineArray;
 
     _lootCrate addWeaponCargoGlobal [_primaryWeapon, 1];
