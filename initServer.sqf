@@ -387,10 +387,26 @@ ark_fnc_br_spawnCrateDrop = {
 };
 
 ark_fnc_br_movePlayersInPlane = {
-    {
-        [_x,c130_start_plane] remoteExec ["moveInCargo", _x];
-        uiSleep 0.25;
-    } forEach playableUnits;
+    private _playerQueue = playableUnits;
+    _cargoAvail = getNumber (configfile >> "CfgVehicles" >> "CUP_B_C130J_GB" >> "transportSoldier");
+
+    waitUntil {
+        _heloQueue = _playerQueue select [0, _cargoAvail];
+        _playerQueue deleteRange [0, (count _heloQueue)];
+        missionNamespace setVariable ["isBusy", true];
+        
+        {
+            [_x,c130_start_plane] remoteExec ["assignAsCargo", _x];
+            [_x,c130_start_plane] remoteExec ["moveInCargo", 0];
+        } forEach _heloQueue;
+         
+        waitUntil {
+            uiSleep 2;
+            !(missionNamespace getVariable ["isBusy", false]);
+        };
+        
+        (count _playerQueue) == 0;
+    };
 };
 
 ark_fnc_br_init = {

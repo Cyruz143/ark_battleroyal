@@ -2,7 +2,7 @@
 Battle Royale gimmick mission for ARK
 
 ## Looting System
-* Split loot types [medical/guns/gear]
+* Split loot types [primary/secondary/gear]
 * Randomise loot
 * Scale loot spawns to building size
 * DynamicSimulation
@@ -23,7 +23,7 @@ Battle Royale gimmick mission for ARK
 * Disabled stamina
 
 ## Features:
-* Randomly spawned cars scaled to 50% of players
+* Randomly spawned cars scaled to 1:1 of playercount
 * Countdown to zone move
 * Kill feed
 * Players alive counter
@@ -37,6 +37,7 @@ Battle Royale gimmick mission for ARK
 
 ## Future Features:
 * Zone randomisation (not always centre)
+* Randomised starting point
 * Move units from BLU to CIV
 * Clean up gear (remove thermal sights)
 * Plane starting point randomisation
