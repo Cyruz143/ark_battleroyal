@@ -12,30 +12,26 @@ allVests = [];
 allHelmets = [];
 
 // Fill loot arrays
-private _primaryWeaponConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 1 } } )" configClasses ( configFile >> "cfgWeapons" );
-{  private _primaryWeaponString = configName (_x); 
-    allPrimaryWeapons pushBack _primaryWeaponString; 
-}  forEach _primaryWeaponConfig; 
-
-private _secondaryWeaponConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'simulation' ) isEqualTo 'Weapon' && { getNumber ( _x >> 'type' ) isEqualTo 2 } } )" configClasses ( configFile >> "cfgWeapons" );
-{  private _secondaryWeaponString = configName (_x); 
-    allSecondaryWeapons pushBack _secondaryWeaponString; 
-}  forEach _secondaryWeaponConfig; 
-
-private _backpackConfig = "( getNumber ( _x >> ""scope"" ) isEqualTo 2 && { getNumber ( _x >> ""isbackpack"" ) isEqualTo 1 && { getNumber ( _x >> ""maximumLoad"" ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
+private _backpackConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getNumber ( _x >> 'isbackpack' ) isEqualTo 1 && { getNumber ( _x >> 'maximumLoad' ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
 {  private _backpackString = configName (_x); 
     allBackpacks pushBack _backpackString; 
 }  forEach _backpackConfig;
 
-private _vestConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsVests' } )" configClasses ( configFile >> "cfgVehicles" );
-{  private _vestString = configName (_x); 
-    allVests pushBack _vestString; 
-}  forEach _vestConfig;
-
-private _helmetConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'ItemsHeadgear' } )" configClasses ( configFile >> "cfgVehicles" );
-{  private _helmetString = configName (_x); 
-    allHelmets pushBack _helmetString; 
-}  forEach _helmetConfig;
+private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasses ( configFile >> "cfgWeapons" );
+{  private _itemString = configName (_x); 
+    switch (_itemString call BIS_fnc_itemType select 1) do
+    {
+        case "AssaultRifle": {allPrimaryWeapons pushBack _itemString};
+        case "MachineGun": {allPrimaryWeapons pushBack _itemString};
+        case "Shotgun": {allPrimaryWeapons pushBack _itemString};
+        case "Rifle": {allPrimaryWeapons pushBack _itemString};
+        case "SubmachineGun": {allPrimaryWeapons pushBack _itemString};
+        case "Handgun": {allSecondaryWeapons pushBack _itemString};
+        case "Vest": {allVests pushBack _itemString};
+        case "Headgear": {allHelmets pushBack _itemString};
+        default {};
+    };
+} forEach _itemConfig;
 
 // Loot blacklist
 {  private _brokenSecondary = allSecondaryWeapons find _x;
