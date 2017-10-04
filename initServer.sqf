@@ -5,40 +5,43 @@
 west setFriend [west, 0];
 
 // Setup emtpy arrays for loot
-allPrimaryWeapons = [];
-allSecondaryWeapons = [];
-allBackpacks = [];
-allVests = [];
-allHelmets = [];
-allVehicles = [];
+BRallPrimaryWeapons = [];
+BRallSecondaryWeapons = [];
+BRallBackpacks = [];
+BRallVests = [];
+BRallHelmets = [];
+BRallVehicles = [];
 
 // Fill loot arrays
 private _backpackConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getNumber ( _x >> 'isbackpack' ) isEqualTo 1 && { getNumber ( _x >> 'maximumLoad' ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
 {  private _backpackString = configName (_x); 
-    allBackpacks pushBack _backpackString; 
+    BRallBackpacks pushBack _backpackString; 
 }  forEach _backpackConfig;
+
+private _vehicleConfigs = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'Car' && { getNumber ( _x >> 'side' ) isEqualTo 3 } } )" configClasses ( configFile >> "cfgVehicles");
+{  private _vehicleString = configName (_x); 
+    BRallVehicles pushBack _vehicleString; 
+}  forEach _vehicleConfigs;
 
 private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasses ( configFile >> "cfgWeapons" );
 {  private _itemString = configName (_x); 
     switch (_itemString call BIS_fnc_itemType select 1) do
     {
-        case "AssaultRifle": {allPrimaryWeapons pushBack _itemString};
-        case "MachineGun": {allPrimaryWeapons pushBack _itemString};
-        case "Shotgun": {allPrimaryWeapons pushBack _itemString};
-        case "Rifle": {allPrimaryWeapons pushBack _itemString};
-        case "SubmachineGun": {allPrimaryWeapons pushBack _itemString};
-        case "Handgun": {allSecondaryWeapons pushBack _itemString};
-        case "Vest": {allVests pushBack _itemString};
-        case "Headgear": {allHelmets pushBack _itemString};
+        case "AssaultRifle": {BRallPrimaryWeapons pushBack _itemString};
+        case "MachineGun": {BRallPrimaryWeapons pushBack _itemString};
+        case "Shotgun": {BRallPrimaryWeapons pushBack _itemString};
+        case "Rifle": {BRallPrimaryWeapons pushBack _itemString};
+        case "SubmachineGun": {BRallPrimaryWeapons pushBack _itemString};
+        case "Handgun": {BRallSecondaryWeapons pushBack _itemString};
+        case "Vest": {BRallVests pushBack _itemString};
+        case "Headgear": {BRallHelmets pushBack _itemString};
         default {};
     };
 } forEach _itemConfig;
 
-
-
 // Loot blacklist
-{  private _brokenSecondary = allSecondaryWeapons find _x;
-    allSecondaryWeapons deleteAt _brokenSecondary;
+{  private _brokenSecondary = BRallSecondaryWeapons find _x;
+    BRallSecondaryWeapons deleteAt _brokenSecondary;
 } forEach ["hlc_pistol_P239_40"];
 
 // Set global variables
@@ -91,7 +94,7 @@ ark_fnc_br_spawnLoot = {
             private _randomNum = ceil (random 3);
             switch (_randomNum) do {
                 case 1: {
-                    private _primaryWeapon = selectRandom allPrimaryWeapons;
+                    private _primaryWeapon = selectRandom BRallPrimaryWeapons;
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
                     if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
                     private _magazines = selectRandom _magazineArray;
@@ -113,9 +116,9 @@ ark_fnc_br_spawnLoot = {
                     };
                 };
                 case 2: {
-                    private _backpack = selectRandom allBackpacks;
-                    private _vest = selectRandom allVests;
-                    private _headgear = selectRandom allHelmets;
+                    private _backpack = selectRandom BRallBackpacks;
+                    private _vest = selectRandom BRallVests;
+                    private _headgear = selectRandom BRallHelmets;
                     private _item = selectRandom [_backpack,_vest,_headgear];
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
@@ -138,7 +141,7 @@ ark_fnc_br_spawnLoot = {
                     };
                 };
                 case 3: {
-                    private _secondaryWeapon = selectRandom allSecondaryWeapons;
+                    private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
                     if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
                     private _magazines = selectRandom _magazineArray;
@@ -177,18 +180,18 @@ ark_fnc_br_lootCrate = {
     clearWeaponCargoGlobal _lootCrate; 
     clearBackpackCargoGlobal _lootCrate; 
 
-    private _selectedBackpack = selectRandom allBackpacks;
-    private _selectedVest = selectRandom allVests;
-    private _selectedHeadgear = selectRandom allHelmets;
-    private _selectedMedical = selectRandom ["ACE_fieldDressing","ACE_morphine"];
+    private _selectedBackpack = selectRandom BRallBackpacks;
+    private _selectedVest = selectRandom BRallVests;
+    private _selectedHeadgear = selectRandom BRallHelmets;
 
     _lootCrate addBackpackCargoGlobal [_selectedBackpack, 1];
     _lootCrate addItemCargoGlobal [_selectedVest, 1];
     _lootCrate addItemCargoGlobal [_selectedHeadgear, 1];
-    _lootCrate addItemCargoGlobal [_selectedMedical, 10];
+    _lootCrate addItemCargoGlobal ["ACE_fieldDressing", 10];
+    _lootCrate addItemCargoGlobal ["ACE_morphine", 5];
 
-    private _primaryWeapon = selectRandom allPrimaryWeapons;
-    private _secondaryWeapon = selectRandom allSecondaryWeapons;
+    private _primaryWeapon = selectRandom BRallPrimaryWeapons;
+    private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
     
     private _primaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
     if (count _primaryWeaponmagazineArray == 0 || isnil "_primaryWeaponmagazineArray") exitWith {};
@@ -207,7 +210,6 @@ ark_fnc_br_lootCrate = {
 
 ark_fnc_br_spawnVehicles = {
     private _roadsArray = zoneCenter nearRoads 3500;
-    private _vehiclesArray = ["CUP_C_Octavia_CIV", "CUP_C_Skoda_Blue_CIV", "CUP_C_UAZ_Open_TK_CIV", "CUP_C_Ural_Civ_03", "CUP_C_Datsun_4seat" ,"CUP_C_Golf4_random_Civ", "CUP_C_Golf4_kitty_Civ", "C_Offroad_01_repair_F", "C_Quadbike_01_white_F", "C_Offroad_02_unarmed_orange_F", "C_Offroad_02_unarmed_blue_F", "CUP_C_Ikarus_TKC", "CUP_C_Ikarus_Chernarus"];
     private _playerCount = count playableUnits;
 
     for "_i" from 1 to _playerCount do {
@@ -215,7 +217,7 @@ ark_fnc_br_spawnVehicles = {
         private _roadArrayIndex = _roadsArray find _roadSpawnArea;
         _roadsArray deleteAt _roadArrayIndex;
         private _roadPos = getpos _roadSpawnArea;
-        private _selectedVehicle = selectRandom _vehiclesArray;
+        private _selectedVehicle = selectRandom BRallVehicles;
 
         if (isOnRoad _roadSpawnArea) then {
             private _veh = _selectedVehicle createVehicle _roadPos;
