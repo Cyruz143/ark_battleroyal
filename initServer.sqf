@@ -125,6 +125,7 @@ ark_fnc_br_spawnLoot = {
                     _itemBox setVectorUp surfaceNormal position _itemBox;
                     if ([_item] call ACE_backpacks_fnc_isBackpack) then {
                         _itemBox addBackpackCargoGlobal [_item,1];
+                        {_x _item} forEach [clearItemCargoGlobal,clearMagazineCargoGlobal,clearWeaponCargoGlobal,clearBackpackCargoGlobal];
                     } else {
                         _itemBox addItemCargoGlobal [_item,1];
                     };
@@ -183,6 +184,7 @@ ark_fnc_br_lootCrate = {
     private _selectedHeadgear = selectRandom BRallHelmets;
 
     _lootCrate addBackpackCargoGlobal [_selectedBackpack, 1];
+    {_x _selectedBackpack} forEach [clearItemCargoGlobal,clearMagazineCargoGlobal,clearWeaponCargoGlobal,clearBackpackCargoGlobal];
     _lootCrate addItemCargoGlobal [_selectedVest, 1];
     _lootCrate addItemCargoGlobal [_selectedHeadgear, 1];
     _lootCrate addItemCargoGlobal ["ACE_fieldDressing", 10];
