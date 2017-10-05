@@ -1,6 +1,3 @@
-// Eject EH for paradrop
-player addEventHandler ["GetOutMan", {call ark_fnc_br_playerParachute}];
-
 // Disable ST grouping
 STHUD_UIMode = 0;
 STGI_Enabled = false;
@@ -72,21 +69,6 @@ ark_fnc_br_playerIntro = {
     };
 };
 
-ark_fnc_br_playerParachute = {
-    if ((getpos player select 2) > 300) then {      
-        [] spawn {
-            player allowdamage false;
-            waituntil {(getpos player select 2) < 300};
-            _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
-            _chute setPos (getPos player);
-            player moveInDriver _chute;
-            
-            waituntil {isTouchingGround player};
-            player allowDamage true;
-        };
-    };
-};
-
 ark_fnc_br_updateZone = {
     params [
         ["_currentZone", objNull]
@@ -134,9 +116,24 @@ ark_fnc_br_endMusic = {
     };
 };
 
+ark_fnc_br_paradropPlayer = {
+    player allowdamage false;
+    player setPosASL [((getMarkerPos "center_zone_marker") select 0) + (random [-2000,0,2000]), ((getMarkerPos "center_zone_marker") select 1) + (random [-2000,0,2000]), 2000];
+
+    waituntil {(getpos player select 2) < 200};
+    private _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
+    _chute setPos (getPos player);
+    player moveInDriver _chute;
+    waituntil {isTouchingGround player};
+    player allowDamage true;
+};
+
 if (!didJIP) then {
     [] call ark_fnc_br_playerStartingGear;
     [] spawn ark_fnc_br_playerIntro;
+    if (ark_br_startStyle == 1) then {
+        [] call ark_fnc_br_paradropPlayer;
+    };
     [] spawn ark_fnc_br_checkPlayersOutSideZone;
     [] spawn ark_fnc_br_endMusic;
 };

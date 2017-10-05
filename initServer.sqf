@@ -54,10 +54,8 @@ currentZoneIndex = 0; // this could be made a mission param to shorten game leng
 zoneCounter = 1;
 lastZone = false;
 zoneCenter = getMarkerPos "center_zone_marker";
-planeExit = getMarkerPos "plane_exit_marker";
 currentZoneMarker = createMarker ["currentZone", zoneCenter];
 nextZone = createMarker ["nextZone", zoneCenter];
-
 currentZoneMarker setMarkerShape "ELLIPSE";
 currentZoneMarker setMarkerBrush "SolidBorder";
 currentZoneMarker setMarkerColor "colorOPFOR";
@@ -237,48 +235,6 @@ ark_fnc_br_spawnVehicles = {
     };
 };
 
-ark_fnc_br_spawnPlane = {
-    private _grp = createGroup [civilian, true];
-    private _pilot = _grp createUnit ["C_man_pilot_F", [0,0,0], [], 0, "NONE"];
-    c130_start_plane = createVehicle ["CUP_B_C130J_GB", [0,0,1500], [], 0, "FLY"];
-    publicVariable "c130_start_plane";
-    _pilot moveInDriver c130_start_plane;
-    c130_start_plane flyInHeight 1000;
-
-    clearItemCargoGlobal c130_start_plane;
-    clearMagazineCargoGlobal c130_start_plane;
-    clearWeaponCargoGlobal c130_start_plane;
-    clearBackpackCargoGlobal c130_start_plane;
-
-    private _wp = _grp addWaypoint [zoneCenter, 0];
-    _wp setWaypointType "MOVE";
-    _wp setWaypointBehaviour "CARELESS";
-    _wp setWaypointCombatMode "BLUE";
-    _wp setWaypointSpeed "FULL";
-
-    private _wp1 = _grp addWaypoint [planeExit, 0];
-    _wp1 setWaypointType "MOVE";
-    _wp1 setWaypointBehaviour "CARELESS";
-    _wp1 setWaypointCombatMode "BLUE";
-    _wp1 setWaypointSpeed "FULL";
-
-    waitUntil { c130_start_plane inArea currentZoneMarker };
-    private _cargo = crew c130_start_plane;
-    private _removePilot = _cargo find _pilot;
-    _cargo deleteAt _removePilot;
-    
-    private _ejectMessage = "You're inside the zone<br />Eject before the plane leaves the area";
-
-    {
-        "alarm_independent" remoteExec ["playSound", _x];
-        [_ejectMessage,-1,-1,5,0,0,txt7Layer] remoteExec ["BIS_fnc_dynamicText", _x];
-    } forEach _cargo;
-
-    waitUntil { c130_start_plane inArea "plane_exit_marker" };
-    deleteVehicle c130_start_plane;
-    deleteVehicle _pilot;
-};
-
 ark_fnc_br_startingCountdownServer = {
     uiSleep 20;
     [startCrate] call ark_fnc_br_lootCrate;
@@ -386,32 +342,8 @@ ark_fnc_br_spawnCrateDrop = {
     detach _ammoBox; 
 };
 
-ark_fnc_br_movePlayersInPlane = {
-    private _playerQueue = playableUnits;
-    _cargoAvail = getNumber (configfile >> "CfgVehicles" >> "CUP_B_C130J_GB" >> "transportSoldier");
-
-    waitUntil {
-        _heloQueue = _playerQueue select [0, _cargoAvail];
-        _playerQueue deleteRange [0, (count _heloQueue)];
-        missionNamespace setVariable ["isBusy", true];
-        
-        {
-            [_x,c130_start_plane] remoteExec ["assignAsCargo", _x];
-            [_x,c130_start_plane] remoteExec ["moveInCargo", 0];
-        } forEach _heloQueue;
-         
-        waitUntil {
-            uiSleep 2;
-            !(missionNamespace getVariable ["isBusy", false]);
-        };
-        
-        (count _playerQueue) == 0;
-    };
-};
-
 ark_fnc_br_init = {
     startTime = diag_tickTime;
-
     [] spawn ark_fnc_br_roundTimer;
 };
 
@@ -421,7 +353,6 @@ ark_fnc_br_init = {
 if (ark_br_startStyle == 1) then {
     [] spawn ark_fnc_br_spawnPlane;
     {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8,startCrate];
-    [] spawn ark_fnc_br_movePlayersInPlane;
 };
 
 waitUntil {
