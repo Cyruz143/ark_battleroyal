@@ -132,7 +132,7 @@ if (!didJIP) then {
     [] call ark_fnc_br_playerStartingGear;
     [] spawn ark_fnc_br_playerIntro;
     if (ark_br_startStyle == 1) then {
-        [] call ark_fnc_br_paradropPlayer;
+        [] spawn ark_fnc_br_paradropPlayer;
     };
     [] spawn ark_fnc_br_checkPlayersOutSideZone;
     [] spawn ark_fnc_br_endMusic;
