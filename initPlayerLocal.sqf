@@ -83,7 +83,7 @@ ark_fnc_br_checkPlayersOutSideZone = {
             
             if (!(player inArea "currentZone") && alive player) then {
                 [_outOfZoneWarning,-1,-1,5,0,0,txt5Layer] spawn BIS_fnc_dynamicText;
-                [player,selectrandom [0.2,0.4,0.6],selectrandom ["head","body","hand_l","hand_r","leg_l","leg_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
+                [player,selectrandom [0.1,0.2,0.3],selectrandom ["head","body","hand_l","hand_r","leg_l","leg_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
                 private _woundedSound = ["WoundedGuyC_05","WoundedGuyA_08","WoundedGuyB_07"];
                 playSound selectRandom _woundedSound;
                 private _playerUnconscious = player getVariable ["ACE_isUnconscious", false];
