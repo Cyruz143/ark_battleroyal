@@ -118,7 +118,7 @@ ark_fnc_br_endMusic = {
 
 ark_fnc_br_paradropPlayer = {
     player allowdamage false;
-    player setPosASL [((getMarkerPos "center_zone_marker") select 0) + (random [-2000,0,2000]), ((getMarkerPos "center_zone_marker") select 1) + (random [-2000,0,2000]), 2000];
+    player setPosASL [((getMarkerPos "center_zone_marker") select 0) + (random [-4000,0,4000]), ((getMarkerPos "center_zone_marker") select 1) + (random [-4000,0,4000]), 2000];
 
     waituntil {(getpos player select 2) < 200};
     private _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];

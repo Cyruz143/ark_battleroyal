@@ -16,8 +16,8 @@ The green centre zone indicates the next safe zone, the red outer ring is the cu
 player createDiaryRecord ["Diary", ["Debug", "
 <br/>
 Blue dots = Vests / Backpacks / Helmets
-<br/>Green dots = Medical supplies
-<br/>Red dots = Rifle / Pistol
+<br/>Green dots = secondaryWeapon
+<br/>Red dots = primaryWeapon
 <br/>Pink dots = Vehicles
 "]];
 
