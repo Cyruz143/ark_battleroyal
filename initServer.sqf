@@ -40,6 +40,10 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
 } forEach _itemConfig;
 
 // Loot blacklist
+{ private _brokenPrimary = allPrimaryWeapons find _x;
+    allPrimaryWeapons deleteAt _brokenPrimary;
+} forEach ["HLC_Rifle_g3ka4_GL_XMAG"];
+
 {  private _brokenSecondary = BRallSecondaryWeapons find _x;
     BRallSecondaryWeapons deleteAt _brokenSecondary;
 } forEach ["hlc_pistol_P239_40"];
