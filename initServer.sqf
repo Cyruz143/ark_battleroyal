@@ -102,7 +102,7 @@ ark_fnc_br_spawnLoot = {
                 case 1: {
                     private _primaryWeapon = selectRandom BRallPrimaryWeapons;
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
-                    if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
+                    if (isNil "_magazineArray" || { count _magazineArray == 0 }) exitWith {};
                     private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
@@ -149,7 +149,7 @@ ark_fnc_br_spawnLoot = {
                 case 3: {
                     private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
-                    if (count _magazineArray == 0 || isnil "_magazineArray") exitWith {};
+                    if (isNil "_magazineArray" || { count _magazineArray == 0 }) exitWith {};
                     private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
@@ -200,11 +200,11 @@ ark_fnc_br_lootCrate = {
     private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
     
     private _primaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
-    if (count _primaryWeaponmagazineArray == 0 || isnil "_primaryWeaponmagazineArray") exitWith {};
+	if (isNil "_primaryWeaponmagazineArray" || { count _primaryWeaponmagazineArray == 0 }) exitWith {};
     private _primaryWeaponmagazine = selectRandom _primaryWeaponmagazineArray;
     
     private _secondaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
-    if (count _secondaryWeaponmagazineArray == 0 || isnil "_secondaryWeaponmagazineArray") exitWith {};
+    if (isNil "_secondaryWeaponmagazineArray" || { count _secondaryWeaponmagazineArray == 0 }) exitWith {};
     private _secondaryWeaponmagazine = selectRandom _secondaryWeaponmagazineArray;
 
     _lootCrate addWeaponCargoGlobal [_primaryWeapon, 1];
