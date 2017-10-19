@@ -48,6 +48,10 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
     BRallSecondaryWeapons deleteAt _brokenSecondary;
 } forEach ["hlc_pistol_P239_40"];
 
+{  private _brokenHelmet = BRallHelmets find _x;
+    BRallHelmets deleteAt _brokenHelmet;
+} forEach ["H_HelmetO_ViperSP_ghex_F","H_HelmetO_ViperSP_hex_F"];
+
 // Set global variables
 txt1Layer = "txt1" call BIS_fnc_rscLayer;
 txt2Layer = "txt2" call BIS_fnc_rscLayer;
