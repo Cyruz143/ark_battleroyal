@@ -52,6 +52,10 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
     BRallHelmets deleteAt _brokenHelmet;
 } forEach ["H_HelmetO_ViperSP_ghex_F","H_HelmetO_ViperSP_hex_F"];
 
+{  private _brokenVest = BRallVests find _x;
+    BRallVests deleteAt _brokenVest;
+} forEach ["V_RebreatherB","V_RebreatherIR","V_RebreatherIA"];
+
 // Set global variables
 txt1Layer = "txt1" call BIS_fnc_rscLayer;
 txt2Layer = "txt2" call BIS_fnc_rscLayer;
