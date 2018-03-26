@@ -15,8 +15,7 @@ allUniforms = [];
 
 // Update round time + player counts
 "updateZoneTime" addPublicVariableEventHandler {
-
-    private _remainingZoneTime = _this select 1;
+    params ["","_remainingZoneTime"];
     private _alivePlayersTotal = count playableUnits;
     private _timeTillZoneChangeText = format ["<t size='0.5' color='#ffffff' font='EtelkaMonospaceProBold'>%1 players alive<br />Zone update in: %2</t>", _alivePlayersTotal, _remainingZoneTime];
     [_timeTillZoneChangeText,-1,-safeZoneY+0.85,5,0,0,txt4Layer] spawn BIS_fnc_dynamicText;
@@ -70,9 +69,7 @@ ark_fnc_br_playerIntro = {
 };
 
 ark_fnc_br_updateZone = {
-    params [
-        ["_currentZone", objNull]
-    ];
+    params [["_currentZone", objNull]];
     currentZone = _currentZone;
 };
 
@@ -130,10 +127,15 @@ ark_fnc_br_paradropPlayer = {
 
 if (!didJIP) then {
     [] call ark_fnc_br_playerStartingGear;
-    [] spawn ark_fnc_br_playerIntro;
+
+    ["CBA_loadingScreenDone", {
+        [] spawn ark_fnc_br_playerIntro;
+    }] call CBA_fnc_addEventHandler;
+
     if (ark_br_startStyle == 1) then {
         [] spawn ark_fnc_br_paradropPlayer;
     };
+
     [] spawn ark_fnc_br_checkPlayersOutSideZone;
     [] spawn ark_fnc_br_endMusic;
 };

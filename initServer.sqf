@@ -14,14 +14,16 @@ BRallVehicles = [];
 
 // Fill loot arrays
 private _backpackConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getNumber ( _x >> 'isbackpack' ) isEqualTo 1 && { getNumber ( _x >> 'maximumLoad' ) != 0 } } )" configClasses ( configFile >> "cfgVehicles");
-{  private _backpackString = configName (_x); 
-    BRallBackpacks pushBack _backpackString; 
-}  forEach _backpackConfig;
+{
+    private _backpackString = configName (_x);
+    BRallBackpacks pushBack _backpackString;
+} forEach _backpackConfig;
 
 private _vehicleConfigs = "( getNumber ( _x >> 'scope' ) isEqualTo 2 && { getText ( _x >> 'vehicleClass' ) isEqualTo 'Car' && { getNumber ( _x >> 'side' ) isEqualTo 3 } } )" configClasses ( configFile >> "cfgVehicles");
-{  private _vehicleString = configName (_x); 
+{
+    private _vehicleString = configName (_x);
     BRallVehicles pushBack _vehicleString; 
-}  forEach _vehicleConfigs;
+} forEach _vehicleConfigs;
 
 private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasses ( configFile >> "cfgWeapons" );
 {  private _itemString = configName (_x); 
@@ -44,15 +46,15 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
     allPrimaryWeapons deleteAt _brokenPrimary;
 } forEach ["HLC_Rifle_g3ka4_GL_XMAG"];
 
-{  private _brokenSecondary = BRallSecondaryWeapons find _x;
+{ private _brokenSecondary = BRallSecondaryWeapons find _x;
     BRallSecondaryWeapons deleteAt _brokenSecondary;
 } forEach ["hlc_pistol_P239_40"];
 
-{  private _brokenHelmet = BRallHelmets find _x;
+{ private _brokenHelmet = BRallHelmets find _x;
     BRallHelmets deleteAt _brokenHelmet;
 } forEach ["H_HelmetO_ViperSP_ghex_F","H_HelmetO_ViperSP_hex_F"];
 
-{  private _brokenVest = BRallVests find _x;
+{ private _brokenVest = BRallVests find _x;
     BRallVests deleteAt _brokenVest;
 } forEach ["V_RebreatherB","V_RebreatherIR","V_RebreatherIA"];
 
@@ -82,12 +84,6 @@ nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes selec
 
 ark_fnc_br_spawnLoot = {
     private _buildingArray = zoneCenter nearObjects ["Building", 4000];
-    // Scale building amount if required + adjust forEach loop to use _scaledBuildings
-    /* private _scaledBuildings = [];
-    for "_i" from 0 to (count _buildingArray) step 3 do {
-        _scaledBuildings pushBack (_buildingArray select _i);
-    }; */
-
     private _buildingCount = 0;
     private _lootCount = 0;
 
@@ -115,7 +111,6 @@ ark_fnc_br_spawnLoot = {
                     _itemBox setVectorUp surfaceNormal position _itemBox;
                     _itemBox addWeaponCargoGlobal [_primaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
-                    _itemBox enableDynamicSimulation true;
 
                     if (ark_br_debugState == 1) then {
                         private _itemBoxPos = getpos _itemBox;
@@ -140,7 +135,6 @@ ark_fnc_br_spawnLoot = {
                     } else {
                         _itemBox addItemCargoGlobal [_item,1];
                     };
-                    _itemBox enableDynamicSimulation true;
 
                     if (ark_br_debugState == 1) then {
                         private _itemBoxPos = getpos _itemBox;
@@ -162,8 +156,8 @@ ark_fnc_br_spawnLoot = {
                     _itemBox setVectorUp surfaceNormal position _itemBox;
                     _itemBox addWeaponCargoGlobal [_secondaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
-                    _itemBox enableDynamicSimulation true;
-                    
+
+
                     if (ark_br_debugState == 1) then {
                         private _itemBoxPos = getpos _itemBox;
                         private _markerstr = createMarker ["markername" + (str _itemBoxPos), _itemBoxPos];
@@ -183,7 +177,7 @@ ark_fnc_br_spawnLoot = {
 };
 
 ark_fnc_br_lootCrate = {
-    _lootCrate = _this select 0;
+    params ["_lootCrate"];
 
     clearItemCargoGlobal _lootCrate; 
     clearMagazineCargoGlobal _lootCrate; 
@@ -204,7 +198,7 @@ ark_fnc_br_lootCrate = {
     private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
     
     private _primaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
-	if (isNil "_primaryWeaponmagazineArray" || { count _primaryWeaponmagazineArray == 0 }) exitWith {};
+    if (isNil "_primaryWeaponmagazineArray" || { count _primaryWeaponmagazineArray == 0 }) exitWith {};
     private _primaryWeaponmagazine = selectRandom _primaryWeaponmagazineArray;
     
     private _secondaryWeaponmagazineArray = getArray (configFile >> "CfgWeapons" >> _secondaryWeapon >> "magazines");
@@ -254,10 +248,8 @@ ark_fnc_br_startingCountdownServer = {
 };
 
 ark_fnc_br_playerKillFeedUI = {
-    private _victim = _this select 0;
-    private _attacker = _this select 1;
-    private _instigator = _this select 2;
- 
+    params ["_victim","_attacker","_instigator"];
+
     if (isNull _attacker) then {
         _attacker = _instigator;
     };
@@ -288,11 +280,11 @@ ark_fnc_br_playerKillFeedUI = {
 ark_fnc_br_roundTimer = {
     private _elapsedTime = floor(diag_tickTime - startTime);
     private _remainingZoneTime = floor(zoneCounter * zoneReductionTime - _elapsedTime);
-    
+
     if (_remainingZoneTime < 1 && lastZone) then {
       _remainingZoneTime = 0;
     };
-  
+
     missionNamespace setVariable ["updateZoneTime", _remainingZoneTime];
     publicVariable "updateZoneTime";
 
@@ -329,17 +321,17 @@ ark_fnc_br_nextZone = {
 
 ark_fnc_br_spawnCrateDrop = {
     private _randomPlayer = selectRandom playableUnits;
-    private _position = getPosATL _randomPlayer; 
-    _position set [2, 150]; 
-    
-    private _parachute = createVehicle ["B_Parachute_02_F", _position, [], 0, "FLY"]; 
-    private _ammoBox = createVehicle ["B_CargoNet_01_ammo_F", position _parachute, [], 0, "NONE"]; 
+    private _position = getPosATL _randomPlayer;
+    _position set [2, 150];
+
+    private _parachute = createVehicle ["B_Parachute_02_F", _position, [], 0, "FLY"];
+    private _ammoBox = createVehicle ["B_CargoNet_01_ammo_F", position _parachute, [], 0, "NONE"];
     _ammoBox allowDamage false; 
     [_ammoBox] call ark_fnc_br_lootCrate;
     
-    _ammoBox attachTo [_parachute, [0, 0, -1.3]]; 
-    private _smoke = createVehicle ["SmokeShellOrange", position _parachute, [], 0, "NONE"]; 
-    _smoke attachTo [_parachute, [0, 0, 0]]; 
+    _ammoBox attachTo [_parachute, [0, 0, -1.3]];
+    private _smoke = createVehicle ["SmokeShellOrange", position _parachute, [], 0, "NONE"];
+    _smoke attachTo [_parachute, [0, 0, 0]];
     
     for "_i" from 1 to 3 do {
         [_ammoBox, "air_raid", 500] call CBA_fnc_globalSay3d;
@@ -347,7 +339,8 @@ ark_fnc_br_spawnCrateDrop = {
     };
 
     waitUntil { getPosATL _ammoBox select 2 < 1 || isNull _parachute }; 
-    detach _ammoBox; 
+    detach _ammoBox;
+    deleteVehicle _smoke;
 };
 
 ark_fnc_br_init = {
@@ -363,7 +356,7 @@ if (ark_br_startStyle == 1) then {
 };
 
 waitUntil {
-  [] call hull3_mission_fnc_hasSafetyTimerEnded;
+    [] call hull3_mission_fnc_hasSafetyTimerEnded;
 };
 
 [] call ark_fnc_br_init;
