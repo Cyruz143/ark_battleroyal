@@ -308,7 +308,7 @@ ark_fnc_br_nextZone = {
         lastZone = true;
         nextZone setMarkerSize [0, 0];
     } else {
-        zoneReductionTime = zoneReductionTime - 10; //Decrease zone time to push players
+        zoneReductionTime = zoneReductionTime - 5; //Decrease zone time to push players
         currentZoneMarker setMarkerPos [(getMarkerPos currentZoneMarker #0) + _randomZoneMovement, (getMarkerPos currentZoneMarker #1) + _randomZoneMovement];
         currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
         nextZone setMarkerPos getMarkerPos currentZoneMarker;
@@ -340,9 +340,7 @@ ark_fnc_br_spawnCrateDrop = {
         uiSleep 10;
     };
 
-    waitUntil { getPosATL _ammoBox select 2 < 1 || isNull _parachute }; 
-    detach _ammoBox;
-    deleteVehicle _smoke;
+    [{getPosATL (_this #0) #2 < 1 || isNull (_this #1)}, {detach (_this #0); deleteVehicle (_this #2);}, [_ammoBox, _parachute, _smoke], 30] call CBA_fnc_waitUntilAndExecute;
 };
 
 ark_fnc_br_init = {
@@ -356,6 +354,8 @@ ark_fnc_br_init = {
 if (ark_br_startStyle == 1) then {
     {deleteVehicle _x} forEach [fence1,fence2,fence3,fence4,fence5,fence6,fence7,fence8,startCrate];
 };
+
+[{ [nil, nil, nil, ['confirm']] call compile preProcessFileLineNumbers 'x\ark\addons\hull3\mission_host_safetytimer_stop.sqf';}, [], 30] call CBA_fnc_waitAndExecute;
 
 waitUntil {
     [] call hull3_mission_fnc_hasSafetyTimerEnded;
