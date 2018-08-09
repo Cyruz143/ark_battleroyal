@@ -42,8 +42,8 @@ private _itemConfig = "( getNumber ( _x >> 'scope' ) isEqualTo 2 )" configClasse
 } forEach _itemConfig;
 
 // Loot blacklist
-{ private _brokenPrimary = allPrimaryWeapons find _x;
-    allPrimaryWeapons deleteAt _brokenPrimary;
+{ private _brokenPrimary = BRallPrimaryWeapons find _x;
+    BRallPrimaryWeapons deleteAt _brokenPrimary;
 } forEach ["HLC_Rifle_g3ka4_GL_XMAG"];
 
 { private _brokenSecondary = BRallSecondaryWeapons find _x;
@@ -209,7 +209,7 @@ ark_fnc_br_lootCrate = {
     _lootCrate addMagazineCargoGlobal [_primaryWeaponmagazine, 10];
     _lootCrate addWeaponCargoGlobal [_secondaryWeapon, 1];
     _lootCrate addMagazineCargoGlobal [_secondaryWeaponmagazine, 10];
-    _lootCrate addMagazineCargoGlobal ["HandGrenade", 5];
+    _lootCrate addMagazineCargoGlobal ["HandGrenade", 1];
 };
 
 ark_fnc_br_spawnVehicles = {
@@ -299,10 +299,8 @@ ark_fnc_br_roundTimer = {
 ark_fnc_br_nextZone = {
     currentZoneIndex = currentZoneIndex + 1;
     zoneCounter = zoneCounter + 1;
-
+    private _randomZoneMovement = random [0, -1000, 1000] / currentZoneIndex;
     private _currentZoneSize = zoneSizes select currentZoneIndex;
-    currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
-
     private _nextZoneSize = zoneSizes select (currentZoneIndex + 1);
 
     // We have no more zones after the current one, let's hide it
@@ -310,6 +308,10 @@ ark_fnc_br_nextZone = {
         lastZone = true;
         nextZone setMarkerSize [0, 0];
     } else {
+        zoneReductionTime = zoneReductionTime - 10; //Decrease zone time to push players
+        currentZoneMarker setMarkerPos [(getMarkerPos currentZoneMarker #0) + _randomZoneMovement, (getMarkerPos currentZoneMarker #1) + _randomZoneMovement];
+        currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
+        nextZone setMarkerPos getMarkerPos currentZoneMarker;
         nextZone setMarkerSize [_nextZoneSize, _nextZoneSize];
         [] spawn ark_fnc_br_spawnCrateDrop;
     };

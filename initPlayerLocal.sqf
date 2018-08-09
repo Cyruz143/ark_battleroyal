@@ -26,8 +26,8 @@ ark_fnc_br_playerStartingGear = {
     {  private _itemString = configName (_x); 
         if (_itemString call BIS_fnc_itemType select 1 == "Uniform") then {allUniforms pushBack _itemString};
     } forEach _itemConfig;
-    private _clothing = selectRandom allUniforms;
-    player forceAddUniform _clothing;
+
+    player forceAddUniform (selectRandom allUniforms);
     for "_i" from 1 to 10 do {player addItemToUniform "ACE_fieldDressing";};
     for "_i" from 1 to 5 do {player addItemToUniform "ACE_morphine";};  
 };
@@ -38,7 +38,7 @@ ark_fnc_br_playerIntro = {
     MissionIntro = [] spawn {
         ["BIS_blackStart", false] call BIS_fnc_blackOut;
 
-        sleep 5;
+        uiSleep 5;
         playMusic "RadioAmbient9";
         [[["Life is a game.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
         ["So fight for survival.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
@@ -80,9 +80,8 @@ ark_fnc_br_checkPlayersOutSideZone = {
             
             if (!(player inArea "currentZone") && alive player) then {
                 [_outOfZoneWarning,-1,-1,5,0,0,txt5Layer] spawn BIS_fnc_dynamicText;
-                [player,selectrandom [0.1,0.2,0.3],selectrandom ["head","body","hand_l","hand_r","leg_l","leg_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
-                private _woundedSound = ["WoundedGuyC_05","WoundedGuyA_08","WoundedGuyB_07"];
-                playSound selectRandom _woundedSound;
+                [player,selectrandom [0.1,0.2,0.3],selectrandom ["body","hand_l","hand_r","leg_l","leg_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
+                playSound selectRandom ["WoundedGuyC_05","WoundedGuyA_08","WoundedGuyB_07"];
                 private _playerUnconscious = player getVariable ["ACE_isUnconscious", false];
                 if (_playerUnconscious) then {player setDamage 1};
                 uiSleep 10;
@@ -96,7 +95,7 @@ ark_fnc_br_endMusic = {
     while { true } do {
         if ((count playableUnits) < 2 ) exitWith {
             playMusic "champions";
-            private _brWinner = playableUnits select 0;
+            private _brWinner = playableUnits #0;
             
             if (alive player) then {
                 [player,"Acts_JetsShooterShootingReady_loop"] remoteexec ["switchMove", -2];
@@ -115,9 +114,9 @@ ark_fnc_br_endMusic = {
 
 ark_fnc_br_paradropPlayer = {
     player allowdamage false;
-    player setPosASL [((getMarkerPos "center_zone_marker") select 0) + (random [-3000,0,3000]), ((getMarkerPos "center_zone_marker") select 1) + (random [-3000,0,3000]), 2000];
+    player setPosASL [((getMarkerPos "center_zone_marker") #0) + (random [-3000,0,3000]), ((getMarkerPos "center_zone_marker") #1) + (random [-3000,0,3000]), 2000];
 
-    waituntil {(getpos player select 2) < 200};
+    waituntil {(getpos player #2) < 200};
     private _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
     _chute setPos (getPos player);
     player moveInDriver _chute;
