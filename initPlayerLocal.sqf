@@ -96,7 +96,7 @@ ark_fnc_br_endMusic = {
                 private _brWinner = playableUnits #0;
 
                 if (alive player) then {
-                    [player,"Acts_JetsShooterShootingReady_loop"] remoteExec ["playMove", _brWinner];
+                    ["ace_common_switchMove", [player, "Acts_JetsShooterShootingReady_loop"]] call CBA_fnc_globalEvent;
                 } else {
                     [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
                 };
