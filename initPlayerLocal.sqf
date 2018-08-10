@@ -122,10 +122,8 @@ ark_fnc_br_paradropPlayer = {
     [{isTouchingGround (_this #0)}, {(_this #0) allowDamage true}, [player]] call CBA_fnc_waitUntilAndExecute;
 };
 
-
-[] call ark_fnc_br_playerStartingGear;
-
 if (!didJIP) then {
+    [] call ark_fnc_br_playerStartingGear;
     ["CBA_loadingScreenDone", {
         [] spawn ark_fnc_br_playerIntro;
     }] call CBA_fnc_addEventHandler;

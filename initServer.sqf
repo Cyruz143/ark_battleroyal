@@ -191,8 +191,8 @@ ark_fnc_br_lootCrate = {
     _lootCrate addBackpackCargoGlobal [_selectedBackpack, 1];
     _lootCrate addItemCargoGlobal [_selectedVest, 1];
     _lootCrate addItemCargoGlobal [_selectedHeadgear, 1];
-    _lootCrate addItemCargoGlobal ["ACE_fieldDressing", 10];
-    _lootCrate addItemCargoGlobal ["ACE_morphine", 5];
+    _lootCrate addItemCargoGlobal ["ACE_fieldDressing", 2];
+    _lootCrate addItemCargoGlobal ["ACE_morphine", 2];
 
     private _primaryWeapon = selectRandom BRallPrimaryWeapons;
     private _secondaryWeapon = selectRandom BRallSecondaryWeapons;
@@ -227,7 +227,7 @@ ark_fnc_br_spawnVehicles = {
             private _veh = _selectedVehicle createVehicle _roadPos;
             _veh setDir (getDir _roadSpawnArea);
             _veh setVectorUp surfaceNormal position _veh;
-            _veh setfuel 0.1;
+            _veh setfuel 0.03;
             [_veh] call ark_fnc_br_lootCrate;
 
             if (ark_br_debugState == 1) then {
