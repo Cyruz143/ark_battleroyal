@@ -96,7 +96,7 @@ ark_fnc_br_endMusic = {
                 private _brWinner = playableUnits #0;
 
                 if (alive player) then {
-                    [player,"Acts_JetsShooterShootingReady_loop"] remoteExec ["switchMove", -2];
+                    [player,"Acts_JetsShooterShootingReady_loop"] remoteExec ["playMove", _brWinner];
                 } else {
                     [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
                 };
@@ -135,5 +135,5 @@ if (ark_br_startStyle == 1) then {
     [] call ark_fnc_br_paradropPlayer;
 };
 
-[] spawn ark_fnc_br_checkPlayersOutSideZone;
+[] call ark_fnc_br_checkPlayersOutSideZone;
 [] call ark_fnc_br_endMusic;
