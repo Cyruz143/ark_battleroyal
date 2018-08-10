@@ -2,29 +2,25 @@
 Battle Royale gimmick mission for ARK
 
 ## Looting System
-* Split loot types [primary/secondary/gear]
-* Randomise loot
+* Split loot types (primary/secondary/gear)
+* Randomise loot from cfgWeapons (supports all mods)
 * Scale loot spawns to building size
-* DynamicSimulation
 
 ## Zone Restriction System
-* Map markers
-* Check players in area
-* Sound play on zone update
-* Visual hint on zone update
-* ACE Damage over time for players outside of the zone
+* Random zone movement that scales with zone size
+* Zone map markers
+* ACE DoT for players outside of the zone
+* Sound/visual play on zone update
 
 ## Players Features
-* Random uniform assignment
-* Starting arena or C130 insert
-* Lock players for loading/start
+* Random uniform assignment (supports all mods)
+* Starting arena or paradrop
 * Delay of gate removal for players to run + visual / sound
-* Disabled ST stuff to avoid grouping
+* Disabled grouping
 * Disabled stamina
 
 ## Features:
 * Randomly spawned cars scaled to 1:1 of playercount
-* Countdown to zone move
 * Kill feed
 * Players alive counter
 * Random crate drops
@@ -36,8 +32,5 @@ Battle Royale gimmick mission for ARK
 * Breifing
 
 ## Future Features:
-* Zone randomisation (not always centre)
-* Randomised starting point
 * Move units from BLU to CIV
 * Clean up gear (remove thermal sights)
-* Plane starting point randomisation
