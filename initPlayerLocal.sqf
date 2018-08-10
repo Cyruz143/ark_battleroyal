@@ -90,23 +90,22 @@ ark_fnc_br_checkPlayersOutSideZone = {
 };
 
 ark_fnc_br_endMusic = {
-    _ark_pfh_br_endMusic = [{
-            if ((count playableUnits) < 2 ) exitWith {
-                playMusic "champions";
-                private _brWinner = playableUnits #0;
+    [{(count playableUnits) < 2}, {
+        playMusic "champions";
+        private _brWinner = playableUnits #0;
 
-                if (alive player) then {
-                    ["ace_common_switchMove", [player, "Acts_JetsShooterShootingReady_loop"]] call CBA_fnc_globalEvent;
-                } else {
-                    [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
-                };
+        if (alive player) then {
+            ["ace_common_switchMove", [player, "Acts_JetsShooterShootingReady_loop"]] call CBA_fnc_globalEvent;
+        } else {
+            [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
+        };
 
-                [{
-                    private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_this #0)];
-                    [_winnerMessage,-1,-1,5,1,0,txt6Layer] spawn BIS_fnc_dynamicText;
-                }, [_brWinner], 5] call CBA_fnc_waitAndExecute;
-            };
-    }, 5] call CBA_fnc_addPerFrameHandler;
+        [{
+            private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_this #0)];
+            [_winnerMessage,-1,-1,5,1,0,txt6Layer] spawn BIS_fnc_dynamicText;
+        }, [_brWinner], 5] call CBA_fnc_waitAndExecute;
+
+    }, []] call CBA_fnc_waitUntilAndExecute;
 };
 
 ark_fnc_br_paradropPlayer = {
