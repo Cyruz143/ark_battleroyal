@@ -29,7 +29,7 @@ ark_fnc_br_playerStartingGear = {
 
     player forceAddUniform (selectRandom allUniforms);
     for "_i" from 1 to 10 do {player addItemToUniform "ACE_fieldDressing";};
-    for "_i" from 1 to 5 do {player addItemToUniform "ACE_morphine";};  
+    for "_i" from 1 to 5 do {player addItemToUniform "ACE_morphine";};
 };
 
 ark_fnc_br_playerIntro = {
@@ -41,7 +41,7 @@ ark_fnc_br_playerIntro = {
         uiSleep 5;
         playMusic "RadioAmbient9";
         [[["Life is a game.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
-        ["So fight for survival.","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
+        ["So fight for survival","<t color = '#FFFFFF' align = 'center' shadow = '1' size = '0.5'>%1</t><br/>"],
         ["and see if you're worth it","<t align = 'center' shadow = '1' size = '1' font='PuristaBold'>%1</t><br/>"]],0,0,"<t color='#FF0000' align='center'>%1</t>"] spawn BIS_fnc_typeText;
         uiSleep 8;
 
@@ -74,67 +74,66 @@ ark_fnc_br_updateZone = {
 };
 
 ark_fnc_br_checkPlayersOutSideZone = {
-    while { true } do {
+    _ark_pfh_br_checkPlayersOutSideZone = [{
         if !(currentZone isEqualTo objNull) then {
             private _outOfZoneWarning = "You're outside the active zone<br /><t color='#CC0000'>Taking Damage!</t>";
-            
+
             if (!(player inArea "currentZone") && alive player) then {
                 [_outOfZoneWarning,-1,-1,5,0,0,txt5Layer] spawn BIS_fnc_dynamicText;
-                [player,selectrandom [0.1,0.2,0.3],selectrandom ["body","hand_l","hand_r","leg_l","leg_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
+                [player,selectrandom [0.1,0.2,0.3],selectrandom ["body","hand_l","hand_r"],selectrandom ["grenade","bullet"]] call ace_medical_fnc_addDamageToUnit;
                 playSound selectRandom ["WoundedGuyC_05","WoundedGuyA_08","WoundedGuyB_07"];
                 private _playerUnconscious = player getVariable ["ACE_isUnconscious", false];
                 if (_playerUnconscious) then {player setDamage 1};
-                uiSleep 10;
             };
         };
-      uiSleep 2;
-    };
+    }, 10] call CBA_fnc_addPerFrameHandler;
 };
 
 ark_fnc_br_endMusic = {
-    while { true } do {
-        if ((count playableUnits) < 2 ) exitWith {
-            playMusic "champions";
-            private _brWinner = playableUnits #0;
-            
-            if (alive player) then {
-                [player,"Acts_JetsShooterShootingReady_loop"] remoteexec ["switchMove", -2];
-            } else {
-                [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
-            };
-            
-            uiSleep 5;
+    _ark_pfh_br_endMusic = [{
+            if ((count playableUnits) < 2 ) exitWith {
+                playMusic "champions";
+                private _brWinner = playableUnits #0;
 
-            private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_brWinner)];
-            [_winnerMessage,-1,-1,5,1,0,txt6Layer] spawn BIS_fnc_dynamicText;
-        };
-    uiSleep 2;
-    };
+                if (alive player) then {
+                    [player,"Acts_JetsShooterShootingReady_loop"] remoteExec ["switchMove", -2];
+                } else {
+                    [2, _brWinner, -2, getPos _brWinner] call ace_spectator_fnc_setCameraAttributes;
+                };
+
+                [{
+                    private _winnerMessage = format ["<t color='#CC0000'>%1</t> is the winner",name (_this #0)];
+                    [_winnerMessage,-1,-1,5,1,0,txt6Layer] spawn BIS_fnc_dynamicText;
+                }, [_brWinner], 5] call CBA_fnc_waitAndExecute;
+            };
+    }, 5] call CBA_fnc_addPerFrameHandler;
 };
 
 ark_fnc_br_paradropPlayer = {
     player allowdamage false;
-    player setPosASL [((getMarkerPos "center_zone_marker") #0) + (random [-3000,0,3000]), ((getMarkerPos "center_zone_marker") #1) + (random [-3000,0,3000]), 2000];
+    player setPosASL [((getMarkerPos "center_zone_marker") #0) + (random [0,-3000,3000]), ((getMarkerPos "center_zone_marker") #1) + (random [0,-3000,3000]), 2000];
 
-    waituntil {(getpos player #2) < 200};
-    private _chute = createVehicle ["Steerable_Parachute_F", (getPos player), [], 0, "NONE"];
-    _chute setPos (getPos player);
-    player moveInDriver _chute;
-    waituntil {isTouchingGround player};
-    player allowDamage true;
+    [{getpos (_this #0) < 200}, {
+        private _chute = createVehicle ["Steerable_Parachute_F", (getPos (_this #0)), [], 0, "NONE"];
+        _chute setPos (getPos (_this #0));
+        (_this #0) moveInDriver _chute;
+    }, [player]] call CBA_fnc_waitUntilAndExecute;
+
+    [{isTouchingGround (_this #0)}, {(_this #0) allowDamage true}, [player]] call CBA_fnc_waitUntilAndExecute;
 };
 
-if (!didJIP) then {
-    [] call ark_fnc_br_playerStartingGear;
 
+[] call ark_fnc_br_playerStartingGear;
+
+if (!didJIP) then {
     ["CBA_loadingScreenDone", {
         [] spawn ark_fnc_br_playerIntro;
     }] call CBA_fnc_addEventHandler;
-
-    if (ark_br_startStyle == 1) then {
-        [] spawn ark_fnc_br_paradropPlayer;
-    };
-
-    [] spawn ark_fnc_br_checkPlayersOutSideZone;
-    [] spawn ark_fnc_br_endMusic;
 };
+
+if (ark_br_startStyle == 1) then {
+    [] call ark_fnc_br_paradropPlayer;
+};
+
+[] spawn ark_fnc_br_checkPlayersOutSideZone;
+[] call ark_fnc_br_endMusic;
