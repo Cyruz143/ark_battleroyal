@@ -98,7 +98,7 @@ ark_fnc_br_addDebugMarkers = {
 };
 
 ark_fnc_br_spawnLoot = {
-    private _buildingArray = zoneCenter nearObjects ["Building", (zoneSizes #1)];
+    private _buildingArray = nearestTerrainObjects [zoneCenter, ["HOUSE","CHURCH","CHAPEL","FUELSTATION","HOSPITAL"], (zoneSizes #1), false, true];
     private _buildingCount = 0;
     private _lootCount = 0;
 
