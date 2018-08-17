@@ -84,9 +84,9 @@ nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes selec
 
 ark_fnc_br_setLootPos = {
     params ["_itemBox","_itemPos"];
-    _itemPos set [2, (_itemPos #2 + 1)];
     _itemBox setDir random 360;
     _itemBox setPos _itemPos;
+    _itemBox setVectorUp surfaceNormal position _itemBox;
 };
 
 ark_fnc_br_addDebugMarkers = {
@@ -120,13 +120,12 @@ ark_fnc_br_spawnLoot = {
                     private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
-                    private _itemPos = getPosATL _x;
-                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
+                    [_itemBox,_x] call ark_fnc_br_setLootPos;
                     _itemBox addWeaponCargoGlobal [_primaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
 
                     if (ark_br_debugState == 1) then {
-                        [_itemPos,"ColorRed"] call ark_fnc_br_addDebugMarkers;
+                        [_x,"ColorRed"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 case 2: {
@@ -136,8 +135,7 @@ ark_fnc_br_spawnLoot = {
                     private _item = selectRandom [_backpack,_vest,_headgear];
                     
                     private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
-                    private _itemPos = getPosATL _x;
-                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
+                    [_itemBox,_x] call ark_fnc_br_setLootPos;
                     if ([_item] call ACE_backpacks_fnc_isBackpack) then {
                         _itemBox addBackpackCargoGlobal [_item,1];
                     } else {
@@ -145,7 +143,7 @@ ark_fnc_br_spawnLoot = {
                     };
 
                     if (ark_br_debugState == 1) then {
-                        [_itemPos,"ColorBlue"] call ark_fnc_br_addDebugMarkers;
+                        [_x,"ColorBlue"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 case 3: {
@@ -155,13 +153,12 @@ ark_fnc_br_spawnLoot = {
                     private _magazines = selectRandom _magazineArray;
                     
                     private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
-                    private _itemPos = getPosATL _x;
-                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
+                    [_itemBox,_x] call ark_fnc_br_setLootPos;
                     _itemBox addWeaponCargoGlobal [_secondaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
 
                     if (ark_br_debugState == 1) then {
-                        [_itemPos,"ColorGreen"] call ark_fnc_br_addDebugMarkers;
+                        [_x,"ColorGreen"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 default { diag_log "ark_fnc_br_spawnLoot broke" };
@@ -177,7 +174,10 @@ ark_fnc_br_spawnLoot = {
 ark_fnc_br_lootCrate = {
     params ["_lootCrate"];
 
-    {_x _lootCrate} forEach [clearItemCargoGlobal,clearMagazineCargoGlobal,clearWeaponCargoGlobal,clearBackpackCargoGlobal];
+    clearItemCargoGlobal _lootCrate; 
+    clearMagazineCargoGlobal _lootCrate; 
+    clearWeaponCargoGlobal _lootCrate; 
+    clearBackpackCargoGlobal _lootCrate; 
 
     private _selectedBackpack = selectRandom BRallBackpacks;
     private _selectedVest = selectRandom BRallVests;
