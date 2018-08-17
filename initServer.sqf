@@ -63,7 +63,7 @@ txt1Layer = "txt1" call BIS_fnc_rscLayer;
 txt2Layer = "txt2" call BIS_fnc_rscLayer;
 txt7Layer = "txt7" call BIS_fnc_rscLayer;
 zoneReductionTime = 180;
-zoneSizes = [4500,4000,3500,3000,2500,2000,1500,1000,500,250,100];
+zoneSizes = [4500,4000,3500,3000,2500,2000,1500,1000,500,250,100,50,25];
 currentZoneIndex = 0; // this could be made a mission param to shorten game lengths / player counts (gimmicks?)
 zoneCounter = 1;
 lastZone = false;
@@ -82,6 +82,21 @@ nextZone setMarkerBrush "SolidBorder";
 nextZone setMarkerColor "ColorKhaki";
 nextZone setMarkerSize [zoneSizes select (currentZoneIndex + 1), zoneSizes select (currentZoneIndex + 1)];
 
+ark_fnc_br_setLootPos = {
+    params ["_itemBox","_itemPos"];
+    _itemPos set [2, (_itemPos #2 + 1)];
+    _itemBox setDir random 360;
+    _itemBox setPos _itemPos;
+};
+
+ark_fnc_br_addDebugMarkers = {
+    params ["_itemPos","_colour"];
+    private _markerstr = createMarker ["markername" + (str _itemPos), _itemPos];
+    _markerstr setMarkerColor _colour;
+    _markerstr setMarkerShape "ICON";
+    _markerstr setMarkerType "hd_dot";
+};
+
 ark_fnc_br_spawnLoot = {
     private _buildingArray = zoneCenter nearObjects ["Building", 4000];
     private _buildingCount = 0;
@@ -96,28 +111,22 @@ ark_fnc_br_spawnLoot = {
         };
         {
             _lootCount = _lootCount + 1;
-          
-            private _randomNum = ceil (random 3);
-            switch (_randomNum) do {
+
+            switch (selectRandom [1,2,3]) do {
                 case 1: {
                     private _primaryWeapon = selectRandom BRallPrimaryWeapons;
                     private _magazineArray = getArray (configFile >> "CfgWeapons" >> _primaryWeapon >> "magazines");
                     if (isNil "_magazineArray" || { count _magazineArray == 0 }) exitWith {};
                     private _magazines = selectRandom _magazineArray;
                     
-                    private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
-                    _itemBox setDir random 360;
-                    _itemBox setPos _x;
-                    _itemBox setVectorUp surfaceNormal position _itemBox;
+                    private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
+                    private _itemPos = getPosATL _x;
+                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
                     _itemBox addWeaponCargoGlobal [_primaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
 
                     if (ark_br_debugState == 1) then {
-                        private _itemBoxPos = getpos _itemBox;
-                        private _markerstr = createMarker ["markername" + (str _itemBoxPos), _itemBoxPos];
-                        _markerstr setMarkerColor "ColorRed";
-                        _markerstr setMarkerShape "ICON";
-                        _markerstr setMarkerType "hd_dot";
+                        [_itemPos,"ColorRed"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 case 2: {
@@ -126,10 +135,9 @@ ark_fnc_br_spawnLoot = {
                     private _headgear = selectRandom BRallHelmets;
                     private _item = selectRandom [_backpack,_vest,_headgear];
                     
-                    private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
-                    _itemBox setDir random 360;
-                    _itemBox setPos _x;
-                    _itemBox setVectorUp surfaceNormal position _itemBox;
+                    private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
+                    private _itemPos = getPosATL _x;
+                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
                     if ([_item] call ACE_backpacks_fnc_isBackpack) then {
                         _itemBox addBackpackCargoGlobal [_item,1];
                     } else {
@@ -137,11 +145,7 @@ ark_fnc_br_spawnLoot = {
                     };
 
                     if (ark_br_debugState == 1) then {
-                        private _itemBoxPos = getpos _itemBox;
-                        private _markerstr = createMarker ["markername" + (str _itemBoxPos), _itemBoxPos];
-                        _markerstr setMarkerColor "ColorBlue";
-                        _markerstr setMarkerShape "ICON";
-                        _markerstr setMarkerType "hd_dot";
+                        [_itemPos,"ColorBlue"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 case 3: {
@@ -150,20 +154,14 @@ ark_fnc_br_spawnLoot = {
                     if (isNil "_magazineArray" || { count _magazineArray == 0 }) exitWith {};
                     private _magazines = selectRandom _magazineArray;
                     
-                    private _itemBox = "WeaponHolderSimulated" createVehicle [0,0,0];
-                    _itemBox setDir random 360;
-                    _itemBox setPos _x;
-                    _itemBox setVectorUp surfaceNormal position _itemBox;
+                    private _itemBox = "GroundWeaponHolder" createVehicle [0,0,0];
+                    private _itemPos = getPosATL _x;
+                    [_itemBox,_itemPos] call ark_fnc_br_setLootPos;
                     _itemBox addWeaponCargoGlobal [_secondaryWeapon,1];
                     _itemBox addMagazineCargoGlobal [_magazines,3];
 
-
                     if (ark_br_debugState == 1) then {
-                        private _itemBoxPos = getpos _itemBox;
-                        private _markerstr = createMarker ["markername" + (str _itemBoxPos), _itemBoxPos];
-                        _markerstr setMarkerColor "ColorGreen";
-                        _markerstr setMarkerShape "ICON";
-                        _markerstr setMarkerType "hd_dot";
+                        [_itemPos,"ColorGreen"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
                 default { hint format ["%1", _randomNum] };
@@ -179,10 +177,7 @@ ark_fnc_br_spawnLoot = {
 ark_fnc_br_lootCrate = {
     params ["_lootCrate"];
 
-    clearItemCargoGlobal _lootCrate; 
-    clearMagazineCargoGlobal _lootCrate; 
-    clearWeaponCargoGlobal _lootCrate; 
-    clearBackpackCargoGlobal _lootCrate; 
+    {_x _lootCrate} forEach [clearItemCargoGlobal,clearMagazineCargoGlobal,clearWeaponCargoGlobal,clearBackpackCargoGlobal];
 
     private _selectedBackpack = selectRandom BRallBackpacks;
     private _selectedVest = selectRandom BRallVests;
@@ -214,28 +209,22 @@ ark_fnc_br_lootCrate = {
 
 ark_fnc_br_spawnVehicles = {
     private _roadsArray = zoneCenter nearRoads 3500;
-    private _playerCount = count playableUnits;
 
-    for "_i" from 1 to _playerCount do {
+    for "_i" from 1 to (count playableUnits) do {
         private _roadSpawnArea = selectRandom _roadsArray;
         private _roadArrayIndex = _roadsArray find _roadSpawnArea;
         _roadsArray deleteAt _roadArrayIndex;
-        private _roadPos = getpos _roadSpawnArea;
-        private _selectedVehicle = selectRandom BRallVehicles;
 
         if (isOnRoad _roadSpawnArea) then {
-            private _veh = _selectedVehicle createVehicle _roadPos;
+            private _veh = (selectRandom BRallVehicles) createVehicle (getpos _roadSpawnArea);
             _veh setDir (getDir _roadSpawnArea);
             _veh setVectorUp surfaceNormal position _veh;
             _veh setfuel 0.03;
             [_veh] call ark_fnc_br_lootCrate;
 
             if (ark_br_debugState == 1) then {
-                private _vehPos = getpos _veh;
-                private _markerstr = createMarker ["markername" + (str _vehPos), _vehPos];
-                _markerstr setMarkerColor "ColorPink";
-                _markerstr setMarkerShape "ICON";
-                _markerstr setMarkerType "hd_dot";
+                private _vehPos = getPosATL _veh;
+                [_vehPos,"ColorPink"] call ark_fnc_br_addDebugMarkers;
             };
         };
     };
