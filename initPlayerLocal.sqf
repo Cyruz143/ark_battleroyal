@@ -112,7 +112,7 @@ ark_fnc_br_paradropPlayer = {
     player allowdamage false;
     player setPosASL [((getMarkerPos "center_zone_marker") #0) + (random [0,-3000,3000]), ((getMarkerPos "center_zone_marker") #1) + (random [0,-3000,3000]), 2000];
 
-    [{getpos (_this #0) < 200}, {
+    [{(getpos (_this #0) #2) < 200}, {
         private _chute = createVehicle ["Steerable_Parachute_F", (getPos (_this #0)), [], 0, "NONE"];
         _chute setPos (getPos (_this #0));
         (_this #0) moveInDriver _chute;
