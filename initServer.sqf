@@ -290,6 +290,7 @@ ark_fnc_br_nextZone = {
     zoneCounter = zoneCounter + 1;
     private _currentZoneSize = zoneSizes select currentZoneIndex;
     private _nextZoneSize = zoneSizes select (currentZoneIndex + 1);
+    private _randomZoneMovement = random [0, -(_currentZoneSize / 2), (_currentZoneSize / 2)];
 
     // We have no more zones after the current one, let's hide it
     if (isNil {_nextZoneSize}) then {
@@ -297,27 +298,16 @@ ark_fnc_br_nextZone = {
         nextZone setMarkerSize [0, 0];
     } else {
         zoneReductionTime = zoneReductionTime - 5; //Decrease zone time to push players
-        [] spawn ark_fnc_br_nextZoneInArea;
+        currentZoneMarker setMarkerPos [(getMarkerPos currentZoneMarker #0) + _randomZoneMovement, (getMarkerPos currentZoneMarker #1) + _randomZoneMovement];
+        currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
+        nextZone setMarkerPos getMarkerPos currentZoneMarker;
+        nextZone setMarkerSize [_nextZoneSize, _nextZoneSize];
+        [] spawn ark_fnc_br_spawnCrateDrop;
     };
 
     currentZoneMarker remoteExec ["ark_fnc_br_updateZone", -2];
     "Alarm" remoteExec ["playSound", -2];
     ["Zones have been updated<br />Check your map",-1,safezoneY+0.25,3,0,0,txt1Layer] remoteExec ["BIS_fnc_dynamicText", -2];
-};
-
-ark_fnc_br_nextZoneInArea = {
-    waitUntil {
-        private _randomZoneMovement = random [0, -1000, 1000] / currentZoneIndex;
-        _newPos = [(getMarkerPos currentZoneMarker #0) + _randomZoneMovement, (getMarkerPos currentZoneMarker #1) + _randomZoneMovement];
-        
-        _newPos inArea currentZoneMarker;
-    };
-    currentZoneMarker setMarkerPos _newPos;
-    currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
-    nextZone setMarkerPos getMarkerPos currentZoneMarker;
-    nextZone setMarkerSize [_nextZoneSize, _nextZoneSize];
-
-    [] spawn ark_fnc_br_spawnCrateDrop;
 };
 
 ark_fnc_br_spawnCrateDrop = {
