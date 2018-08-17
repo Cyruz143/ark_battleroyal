@@ -164,7 +164,7 @@ ark_fnc_br_spawnLoot = {
                         [_itemPos,"ColorGreen"] call ark_fnc_br_addDebugMarkers;
                     };
                 };
-                default { hint format ["%1", _randomNum] };
+                default { diag_log "ark_fnc_br_spawnLoot broke" };
             };
         } forEach _scaledBuildingPositions;
     } forEach _buildingArray;
