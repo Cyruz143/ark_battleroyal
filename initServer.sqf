@@ -98,7 +98,7 @@ ark_fnc_br_addDebugMarkers = {
 };
 
 ark_fnc_br_spawnLoot = {
-    private _buildingArray = zoneCenter nearObjects ["Building", 4000];
+    private _buildingArray = zoneCenter nearObjects ["Building", (zoneSizes #1)];
     private _buildingCount = 0;
     private _lootCount = 0;
 
@@ -208,7 +208,7 @@ ark_fnc_br_lootCrate = {
 };
 
 ark_fnc_br_spawnVehicles = {
-    private _roadsArray = zoneCenter nearRoads 3500;
+    private _roadsArray = zoneCenter nearRoads (zoneSizes #2);
 
     for "_i" from 1 to (count playableUnits) do {
         private _roadSpawnArea = selectRandom _roadsArray;
