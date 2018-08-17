@@ -291,6 +291,7 @@ ark_fnc_br_nextZone = {
     private _currentZoneSize = zoneSizes select currentZoneIndex;
     private _nextZoneSize = zoneSizes select (currentZoneIndex + 1);
     private _randomZoneMovement = random [0, -(_currentZoneSize / 2), (_currentZoneSize / 2)];
+    nextZone setMarkerPos [(getMarkerPos nextZone #0) + _randomZoneMovement, (getMarkerPos nextZone #1) + _randomZoneMovement];
 
     // We have no more zones after the current one, let's hide it
     if (isNil {_nextZoneSize}) then {
@@ -298,10 +299,9 @@ ark_fnc_br_nextZone = {
         nextZone setMarkerSize [0, 0];
     } else {
         zoneReductionTime = zoneReductionTime - 5; //Decrease zone time to push players
-        currentZoneMarker setMarkerPos [(getMarkerPos currentZoneMarker #0) + _randomZoneMovement, (getMarkerPos currentZoneMarker #1) + _randomZoneMovement];
-        currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
-        nextZone setMarkerPos getMarkerPos currentZoneMarker;
         nextZone setMarkerSize [_nextZoneSize, _nextZoneSize];
+        currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
+        currentZoneMarker setMarkerPos getMarkerPos nextZone;
         [] spawn ark_fnc_br_spawnCrateDrop;
     };
 
