@@ -285,13 +285,11 @@ ark_fnc_br_roundTimer = {
     [] spawn ark_fnc_br_roundTimer;
 };
 
-ark_fnc_br_nextZone = {
+ark_fnc_br_nextZone = {  
     currentZoneIndex = currentZoneIndex + 1;
     zoneCounter = zoneCounter + 1;
     private _currentZoneSize = zoneSizes select currentZoneIndex;
     private _nextZoneSize = zoneSizes select (currentZoneIndex + 1);
-    private _randomZoneMovement = random [0, -(_currentZoneSize / 2), (_currentZoneSize / 2)];
-    nextZone setMarkerPos [(getMarkerPos nextZone #0) + _randomZoneMovement, (getMarkerPos nextZone #1) + _randomZoneMovement];
 
     // We have no more zones after the current one, let's hide it
     if (isNil {_nextZoneSize}) then {
@@ -299,9 +297,20 @@ ark_fnc_br_nextZone = {
         nextZone setMarkerSize [0, 0];
     } else {
         zoneReductionTime = zoneReductionTime - 5; //Decrease zone time to push players
+        
+        private _randomZoneMovement = random [-(_currentZoneSize / 2), 0, (_currentZoneSize / 2)];
+        private _previousZonePos = getMarkerPos nextZone;
+        private _newPos = [(getMarkerPos nextZone #0) + _randomZoneMovement, (getMarkerPos nextZone #1) + _randomZoneMovement, 0];
+
+        while {!(_newPos inArea currentZoneMarker)} do {
+            _randomZoneMovement = random [-(_currentZoneSize / 2), 0, (_currentZoneSize / 2)];
+            _newPos = [(getMarkerPos nextZone #0) + _randomZoneMovement, (getMarkerPos nextZone #1) + _randomZoneMovement, 0];
+        };
+        
+        nextZone setMarkerPos _newPos;
         nextZone setMarkerSize [_nextZoneSize, _nextZoneSize];
         currentZoneMarker setMarkerSize [_currentZoneSize, _currentZoneSize];
-        currentZoneMarker setMarkerPos getMarkerPos nextZone;
+        currentZoneMarker setMarkerPos _previousZonePos;
         [] spawn ark_fnc_br_spawnCrateDrop;
     };
 
